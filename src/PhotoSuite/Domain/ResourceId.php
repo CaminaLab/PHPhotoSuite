@@ -15,6 +15,9 @@ class ResourceId
      */
     public function __construct($id)
     {
+        if (!empty($id) && is_numeric($id)) {
+            $id = (string)$id;
+        }
         if (empty($id) || !is_string($id)) {
             throw new InvalidResourceIdException();
         }

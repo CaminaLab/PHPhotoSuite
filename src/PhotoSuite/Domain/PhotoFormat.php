@@ -23,7 +23,7 @@ class PhotoFormat
         if (!defined('static::FORMAT_' . strtoupper($value))) {
             throw new InvalidFormatException('invalid format: ' . $value);
         }
-        $this->value = $value;
+        $this->value = strtolower($value);
     }
 
     /**

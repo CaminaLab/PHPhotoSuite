@@ -3,6 +3,7 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
+use PHPhotoSuit\PhotoSuite\Domain\Exception\InvalidFormatException;
 
 class PhotoFormatTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,10 +28,10 @@ class PhotoFormatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException PHPhotoSuit\PhotoSuite\Domain\Exception\InvalidFormatException
      */
     public function exception()
     {
+        $this->expectException(InvalidFormatException::class);
         new PhotoFormat('invalid');
     }
 }
