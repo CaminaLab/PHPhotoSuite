@@ -11,7 +11,7 @@ class Collection implements \ArrayAccess, \Iterator
 
     public final function __construct(array $collection = null)
     {
-        if(!isset($this->tablename)) {
+        if(!isset($this->class)) {
             throw new \LogicException(get_class($this) . ' must have a "$class" property');
         }
         if (!is_null($collection)) {
