@@ -2,6 +2,7 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
+use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
@@ -16,11 +17,11 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
         $photo = new Photo(
             new ResourceId(1),
             new PhotoName('testing'),
-            new PhotoFormat('jpg')
+            new PhotoFormat('jpg'),
+            new HttpUrl('http://works')
         );
-        $this->assertEquals($photo->resourceId(), 1);
-        $this->assertEquals($photo->format(), 'jpg');
-        $this->assertEquals($photo->name(), 'testing');
-        $this->assertEquals($photo->slug(), 'testing');
+        $this->assertEquals(1, $photo->resourceId());
+        $this->assertEquals('testing', $photo->name());
+        $this->assertEquals('http://works/1/testing.jpg', $photo->getPhotoHttpUrl());
     }
 }

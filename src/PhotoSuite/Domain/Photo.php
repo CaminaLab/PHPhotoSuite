@@ -10,18 +10,22 @@ class Photo
     private $name;
     /** @var PhotoFormat */
     private $format;
+    /** @var HttpUrl */
+    private $baseHttpUrl;
 
     /**
      * Photo constructor.
      * @param ResourceId $resourceId
      * @param PhotoName $name
      * @param PhotoFormat $format
+     * @param HttpUrl $httpUrl
      */
-    public function __construct(ResourceId $resourceId, PhotoName $name, PhotoFormat $format)
+    public function __construct(ResourceId $resourceId, PhotoName $name, PhotoFormat $format, HttpUrl $httpUrl)
     {
         $this->resourceId = $resourceId;
         $this->name = $name;
         $this->format = $format;
+        $this->baseHttpUrl = $httpUrl;
     }
 
     /**
@@ -39,19 +43,16 @@ class Photo
     {
         return $this->name->name();
     }
-    /**
-     * @return string
-     */
-    public function slug()
-    {
-        return $this->name->slug();
-    }
 
     /**
      * @return string
      */
-    public function format()
+    public function getPhotoHttpUrl()
     {
-        return $this->format->value();
+        return $this->baseHttpUrl->value() .
+                '/' . $this->resourceId->id() .
+                '/' . $this->name->name() .
+                '.' . $this->format->value();
     }
+
 }
