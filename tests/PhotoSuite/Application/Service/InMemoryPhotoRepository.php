@@ -74,4 +74,22 @@ class InMemoryPhotoRepository implements PhotoRepository
         }
         return new PhotoCollection($photos);
     }
+
+    /**
+     * @param Photo $photo
+     * @return void
+     */
+    public function save(Photo $photo)
+    {
+        // TODO: Implement save() method.
+    }
+
+    /**
+     * @param Photo $photo
+     * @return void
+     */
+    public function delete(Photo $photo)
+    {
+        // TODO: Implement delete() method.
+    }
 }

@@ -20,4 +20,16 @@ interface PhotoRepository
      * @throws CollectionNotFoundException
      */
     public function findCollectionBy(ResourceId $resourceId);
+
+    /**
+     * @param Photo $photo
+     * @return void
+     */
+    public function save(Photo $photo);
+
+    /**
+     * @param Photo $photo
+     * @return void
+     */
+    public function delete(Photo $photo);
 }
