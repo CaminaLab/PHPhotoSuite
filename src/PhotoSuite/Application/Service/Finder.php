@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPhotoSuit\PhotoSuite\Application\Services;
+namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
 use PHPhotoSuit\PhotoSuite\Domain\PhotoPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
