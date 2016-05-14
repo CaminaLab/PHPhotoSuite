@@ -11,7 +11,7 @@ class ArrayPhotoPresenter implements PhotoPresenter
 
     /**
      * @param Photo $photo
-     * @return mixed
+     * @return array
      */
     public function write(Photo $photo)
     {
@@ -24,7 +24,7 @@ class ArrayPhotoPresenter implements PhotoPresenter
 
     /**
      * @param PhotoCollection $collection
-     * @return mixed
+     * @return array
      */
     public function writeCollection(PhotoCollection $collection)
     {
