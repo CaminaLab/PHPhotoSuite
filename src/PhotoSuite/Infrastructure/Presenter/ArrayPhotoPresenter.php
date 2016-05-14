@@ -15,7 +15,11 @@ class ArrayPhotoPresenter implements PhotoPresenter
      */
     public function write(Photo $photo)
     {
-        
+        return [
+            'resourceId' => $photo->resourceId(),
+            'name' => $photo->name(),
+            'url' => $photo->getPhotoHttpUrl()
+        ];
     }
 
     /**
@@ -24,6 +28,6 @@ class ArrayPhotoPresenter implements PhotoPresenter
      */
     public function writeCollection(PhotoCollection $collection)
     {
-        // TODO: Implement writeCollection() method.
+        return array_map([ArrayPhotoPresenter::class, 'write'], $collection->toArray());
     }
 }

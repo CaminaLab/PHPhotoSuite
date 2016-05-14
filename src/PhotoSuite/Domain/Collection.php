@@ -102,4 +102,12 @@ class Collection implements \ArrayAccess, \Iterator
     {
         reset($this->collection);
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->collection;
+    }
 }
