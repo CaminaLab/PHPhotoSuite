@@ -21,10 +21,4 @@ interface PhotoStorage
      * @return HttpUrl
      */
     public function getBaseHttpUrlBy(ResourceId $resourceId);
-
-    /**
-     * @param string $file
-     * @return PhotoFormat
-     */
-    public function getPhotoFormat($file);
 }

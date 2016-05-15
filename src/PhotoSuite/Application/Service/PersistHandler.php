@@ -3,6 +3,7 @@
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
 use PHPhotoSuit\PhotoSuite\Domain\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
@@ -48,7 +49,7 @@ class PersistHandler
         return new Photo(
             $resourceId,
             new PhotoName($request->name()),
-            $this->storage->getPhotoFormat($request->file()),
+            PhotoFile::getInstanceByPath($request->file()),
             $this->storage->getBaseHttpUrlBy($resourceId)
         );
     }

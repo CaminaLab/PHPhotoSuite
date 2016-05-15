@@ -4,7 +4,6 @@ namespace PHPhotoSuit\PhotoSuite\Infrastructure\Storage;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
@@ -36,14 +35,5 @@ class PhotoLocalStorage implements PhotoStorage
     public function getBaseHttpUrlBy(ResourceId $resourceId)
     {
         // TODO: Implement getBaseHttpUrlBy() method.
-    }
-
-    /**
-     * @param string $file
-     * @return PhotoFormat
-     */
-    public function getPhotoFormat($file)
-    {
-        // TODO: Implement getPhotoFormat() method.
     }
 }
