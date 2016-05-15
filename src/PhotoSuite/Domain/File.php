@@ -7,26 +7,26 @@ use PHPhotoSuit\PhotoSuite\Domain\Exception\FileNotFoundException;
 class File
 {
     /** @var string */
-    private $path;
+    private $filePath;
 
     /**
-     * @param string $path
+     * @param string $filePath
      * @throws FileNotFoundException
      */
-    public function __construct($path)
+    public function __construct($filePath)
     {
-        if (!file_exists($path)) {
-            throw new FileNotFoundException(sprintf('File %s not found.', $path));
+        if (!file_exists($filePath)) {
+            throw new FileNotFoundException(sprintf('File %s not found.', $filePath));
         }
-        $this->path = $path;
+        $this->filePath = $filePath;
     }
 
     /**
      * @return string
      */
-    public function path()
+    public function filePath()
     {
-        return $this->path;
+        return $this->filePath;
     }
 
     /**
@@ -34,6 +34,6 @@ class File
      */
     public function format()
     {
-        return pathinfo($this->path, PATHINFO_EXTENSION);
+        return pathinfo($this->filePath, PATHINFO_EXTENSION);
     }
 }

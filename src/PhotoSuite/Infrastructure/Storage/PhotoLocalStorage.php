@@ -16,7 +16,7 @@ class PhotoLocalStorage implements PhotoStorage
      */
     public function upload(Photo $photo)
     {
-        // TODO: Implement upload() method.
+        
     }
 
     /**
