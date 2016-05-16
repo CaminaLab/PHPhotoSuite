@@ -18,12 +18,12 @@ class PhotoFile
     }
 
     /**
-     * @param $path
+     * @param $filePath
      * @return PhotoFile
      */
-    public static function getInstanceByPath($path)
+    public static function getInstanceBy($filePath)
     {
-        $file = new File($path);
+        $file = new File($filePath);
         $instance = new self(new PhotoFormat($file->format()));
         $instance->file = $file;
 
@@ -41,8 +41,8 @@ class PhotoFile
     /**
      * @return string
      */
-    public function getFile()
+    public function filePath()
     {
-        return $this->file->path();
+        return $this->file->filePath();
     }
 }

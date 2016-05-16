@@ -49,7 +49,7 @@ class PersistHandler
         return new Photo(
             $resourceId,
             new PhotoName($request->name()),
-            PhotoFile::getInstanceByPath($request->file()),
+            PhotoFile::getInstanceBy($request->file()),
             $this->storage->getBaseHttpUrlBy($resourceId)
         );
     }
