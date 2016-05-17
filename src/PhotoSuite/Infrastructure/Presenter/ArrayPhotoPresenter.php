@@ -16,6 +16,7 @@ class ArrayPhotoPresenter implements PhotoPresenter
     public function write(Photo $photo)
     {
         return [
+            'id' => $photo->id(),
             'resourceId' => $photo->resourceId(),
             'name' => $photo->name(),
             'url' => $photo->getPhotoHttpUrl()

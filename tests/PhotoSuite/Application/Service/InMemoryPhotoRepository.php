@@ -9,6 +9,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
+use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
@@ -22,16 +23,19 @@ class InMemoryPhotoRepository implements PhotoRepository
     {
         $this->photos = [
             $photo = new Photo(
+                new PhotoId(),
                 new ResourceId(1),
                 new PhotoName('testing'),
                 new HttpUrl('http://works')
             ),
             $photo = new Photo(
+                new PhotoId(),
                 new ResourceId(1),
                 new PhotoName('testing'),
                 new HttpUrl('http://works')
             ),
             $photo = new Photo(
+                new PhotoId(),
                 new ResourceId(2),
                 new PhotoName('testing'),
                 new HttpUrl('http://works')

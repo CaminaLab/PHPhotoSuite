@@ -4,6 +4,8 @@ namespace PHPhotoSuit\PhotoSuite\Domain;
 
 class Photo
 {
+    /** @var PhotoId */
+    private $photoId;
     /** @var ResourceId */
     private $resourceId;
     /** @var PhotoName */
@@ -15,21 +17,32 @@ class Photo
 
     /**
      * Photo constructor.
+     * @param PhotoId $photoId
      * @param ResourceId $resourceId
      * @param PhotoName $name
      * @param HttpUrl $photoHttpUrl
      * @param PhotoFile $photoFile
      */
     public function __construct(
+        PhotoId $photoId,
         ResourceId $resourceId,
         PhotoName $name,
         HttpUrl $photoHttpUrl,
         PhotoFile $photoFile = null
     ) {
+        $this->photoId = $photoId;
         $this->resourceId = $resourceId;
         $this->name = $name;
         $this->photoHttpUrl = $photoHttpUrl;
         $this->photoFile = $photoFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function id()
+    {
+        return $this->photoId->id();
     }
 
     /**

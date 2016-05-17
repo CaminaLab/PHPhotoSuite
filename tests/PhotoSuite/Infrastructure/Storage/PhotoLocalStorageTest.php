@@ -4,6 +4,7 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Storage;
 
 use PHPhotoSuit\PhotoSuite\Domain\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
@@ -40,10 +41,12 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
      */
     public function uploadAndDeleteOnePhotoWorks()
     {
+        $photoId = new PhotoId();
         $resourceId = new ResourceId('test');
         $photoName = new PhotoName('test');
         $photoFile = new PhotoFile(__DIR__ . '/photo_to_upload.png');
         $this->storage->upload(new Photo(
+            $photoId,
             $resourceId,
             $photoName,
             $this->storage->getBaseHttpUrlBy($resourceId),
@@ -59,6 +62,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(
             $this->storage->remove(
                 new Photo(
+                    $photoId,
                     $resourceId,
                     $photoName,
                     $this->storage->getBaseHttpUrlBy($resourceId),

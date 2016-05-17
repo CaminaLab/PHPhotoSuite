@@ -17,10 +17,20 @@ class PersistHandler
     private $storage;
 
     /**
-     * @param PhotoRequest $request
+     * @param PhotoRepository $repository
+     * @param PhotoStorage $storage
+     */
+    public function __construct(PhotoRepository $repository, PhotoStorage $storage)
+    {
+        $this->repository = $repository;
+        $this->storage = $storage;
+    }
+
+    /**
+     * @param SavePhotoRequest $request
      * @return void
      */
-    public function save(PhotoRequest $request)
+    public function save(SavePhotoRequest $request)
     {
         $photo = $this->createPhotoBy($request);
         if ($this->storage->upload($photo)) {
@@ -40,10 +50,10 @@ class PersistHandler
     }
 
     /**
-     * @param PhotoRequest $request
+     * @param SavePhotoRequest $request
      * @return Photo
      */
-    private function createPhotoBy(PhotoRequest $request)
+    private function createPhotoBy(SavePhotoRequest $request)
     {
         $resourceId = new ResourceId($request->resourceId());
         return new Photo(

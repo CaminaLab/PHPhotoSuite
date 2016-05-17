@@ -2,7 +2,7 @@
 
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
-class PhotoRequest
+class SavePhotoRequest
 {
     /** @var string */
     private $resourceId;
