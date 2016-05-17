@@ -41,11 +41,12 @@ class PersistHandler
     }
 
     /**
-     * @param Photo $photo
+     * @param string $id
      * @return void
      */
-    public function delete(Photo $photo)
+    public function delete($id)
     {
+        $photo = $this->repository->findById(new PhotoId($id));
         if ($this->storage->remove($photo)) {
             $this->repository->delete($photo);
         }

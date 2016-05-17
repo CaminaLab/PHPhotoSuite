@@ -59,6 +59,22 @@ class InMemoryPhotoRepository implements PhotoRepository
     }
 
     /**
+     * @param PhotoId $photoId
+     * @return mixed|Photo
+     * @throws PhotoNotFoundException
+     */
+    public function findById(PhotoId $photoId)
+    {
+        foreach ($this->photos as $photo) {
+            if ($photo->id() === $photoId->id()) {
+                return $photo;
+            }
+        }
+        throw new PhotoNotFoundException(sprintf('Photo of id %s not found', $photoId->id()));
+    }
+
+
+    /**
      * @param ResourceId $resourceId
      * @return PhotoCollection;
      * @throws CollectionNotFoundException
@@ -83,7 +99,7 @@ class InMemoryPhotoRepository implements PhotoRepository
      */
     public function save(Photo $photo)
     {
-        // TODO: Implement save() method.
+        $this->photos[] = $photo;
     }
 
     /**
@@ -92,6 +108,9 @@ class InMemoryPhotoRepository implements PhotoRepository
      */
     public function delete(Photo $photo)
     {
-        // TODO: Implement delete() method.
+        $key = array_search($photo, $this->photos);
+        if ($key !== false) {
+            unset($this->photos[$key]);
+        }
     }
 }

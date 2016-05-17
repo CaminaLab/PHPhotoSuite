@@ -6,6 +6,7 @@ use PHPhotoSuit\PhotoSuite\Application\Service\PersistHandler;
 use PHPhotoSuit\PhotoSuite\Application\Service\SavePhotoRequest;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
+use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;
 
@@ -35,10 +36,14 @@ class PersistHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function savePhotoWorks()
+    public function saveAndDeletePhotoWorks()
     {
-        $this->markTestSkipped('Before repository should be refactorized');
-        $request = new SavePhotoRequest('test', 'test', __DIR__ . '/../../Domain/pixel.png');
+        $resourceId = 'newphoto';
+        $request = new SavePhotoRequest($resourceId, 'test', __DIR__ . '/../../Domain/pixel.png');
         $this->persistHander->save($request);
+        $photo = $this->repository->findOneBy(new ResourceId($resourceId));
+        $this->assertFileExists($photo->photoFile()->filePath());
+        $this->persistHander->delete($photo->id());
+        $this->assertFileNotExists($photo->photoFile()->filePath());
     }
 }

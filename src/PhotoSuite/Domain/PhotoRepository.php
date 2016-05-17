@@ -15,6 +15,13 @@ interface PhotoRepository
     public function findOneBy(ResourceId $resourceId);
 
     /**
+     * @param PhotoId $photoId
+     * @return mixed
+     * @throws PhotoNotFoundException
+     */
+    public function findById(PhotoId $photoId);
+    
+    /**
      * @param ResourceId $resourceId
      * @return PhotoCollection;
      * @throws CollectionNotFoundException
