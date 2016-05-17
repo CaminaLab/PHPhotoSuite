@@ -11,7 +11,7 @@ class PhotoFileTest extends \PHPUnit_Framework_TestCase
      */
     public function photoFileInstanceWorks()
     {
-        $photoFile = PhotoFile::getInstanceBy(__DIR__ . '/pixel.png');
+        $photoFile = new PhotoFile(__DIR__ . '/pixel.png');
         $this->assertEquals('png', $photoFile->format());
         $this->assertEquals(__DIR__ . '/pixel.png', $photoFile->filePath());
     }

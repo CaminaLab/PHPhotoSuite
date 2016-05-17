@@ -24,19 +24,16 @@ class InMemoryPhotoRepository implements PhotoRepository
             $photo = new Photo(
                 new ResourceId(1),
                 new PhotoName('testing'),
-                new PhotoFile(new PhotoFormat('jpg')),
                 new HttpUrl('http://works')
             ),
             $photo = new Photo(
                 new ResourceId(1),
                 new PhotoName('testing'),
-                new PhotoFile(new PhotoFormat('jpg')),
                 new HttpUrl('http://works')
             ),
             $photo = new Photo(
                 new ResourceId(2),
                 new PhotoName('testing'),
-                new PhotoFile(new PhotoFormat('jpg')),
                 new HttpUrl('http://works')
             )
         ];

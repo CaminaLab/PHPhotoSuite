@@ -29,8 +29,7 @@ class ArrayPhotoPresenterTest extends \PHPUnit_Framework_TestCase
         $this->photo = new Photo(
             new ResourceId('1'),
             new PhotoName('test'),
-            new PhotoFile(new PhotoFormat('jpg')),
-            new HttpUrl('http://test')
+            new HttpUrl('http://test/1/test.jpg')
         );
         $this->photoPresenter = new ArrayPhotoPresenter();
     }

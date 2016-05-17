@@ -8,24 +8,28 @@ class Photo
     private $resourceId;
     /** @var PhotoName */
     private $name;
-    /** @var PhotoFile */
-    private $file;
     /** @var HttpUrl */
-    private $baseHttpUrl;
+    private $photoHttpUrl;
+    /** @var PhotoFile|null */
+    private $photoFile;
 
     /**
      * Photo constructor.
      * @param ResourceId $resourceId
      * @param PhotoName $name
-     * @param PhotoFile $file
-     * @param HttpUrl $httpUrl
+     * @param HttpUrl $photoHttpUrl
+     * @param PhotoFile $photoFile
      */
-    public function __construct(ResourceId $resourceId, PhotoName $name, PhotoFile $file, HttpUrl $httpUrl)
-    {
+    public function __construct(
+        ResourceId $resourceId,
+        PhotoName $name,
+        HttpUrl $photoHttpUrl,
+        PhotoFile $photoFile = null
+    ) {
         $this->resourceId = $resourceId;
         $this->name = $name;
-        $this->file = $file;
-        $this->baseHttpUrl = $httpUrl;
+        $this->photoHttpUrl = $photoHttpUrl;
+        $this->photoFile = $photoFile;
     }
 
     /**
@@ -57,17 +61,14 @@ class Photo
      */
     public function getPhotoHttpUrl()
     {
-        return $this->baseHttpUrl->value() .
-                '/' . $this->resourceId->id() .
-                '/' . $this->name->name() .
-                '.' . $this->file->format();
+        return $this->photoHttpUrl->value();
     }
 
     /**
-     * @return File
+     * @return PhotoFile | null
      */
-    public function file()
+    public function photoFile()
     {
-        return $this->file;
+        return $this->photoFile;
     }
 }

@@ -15,14 +15,17 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
      * @test
      */
     public function photoWorks() {
+        $photoFile = new PhotoFile(__DIR__ . '/pixel.png');
         $photo = new Photo(
             new ResourceId(1),
             new PhotoName('testing'),
-            new PhotoFile(new PhotoFormat('jpg')),
-            new HttpUrl('http://works')
+            new HttpUrl('http://works'),
+            $photoFile
         );
         $this->assertEquals(1, $photo->resourceId());
         $this->assertEquals('testing', $photo->name());
-        $this->assertEquals('http://works/1/testing.jpg', $photo->getPhotoHttpUrl());
+        $this->assertEquals('testing', $photo->slug());
+        $this->assertEquals('http://works', $photo->getPhotoHttpUrl());
+        $this->assertSame($photoFile, $photo->photoFile());
     }
 }

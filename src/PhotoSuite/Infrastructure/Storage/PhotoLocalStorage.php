@@ -29,7 +29,10 @@ class PhotoLocalStorage implements PhotoStorage
     {
         $destinyPath = $this->localStorageConfig->storagePath() . '/' . $this->getMd5Path($photo->resourceId());
         $this->createPathIfNotExists($destinyPath);
-        return copy($photo->file()->filePath(), $destinyPath . '/' . $photo->slug() . '.' . $photo->file()->format());
+        return copy(
+            $photo->photoFile()->filePath(),
+            $destinyPath . '/' . $photo->slug() . '.' . $photo->photoFile()->format()
+        );
     }
 
     /**
@@ -38,7 +41,7 @@ class PhotoLocalStorage implements PhotoStorage
      */
     public function remove(Photo $photo)
     {
-        return unlink($photo->file()->filePath());
+        return unlink($photo->photoFile()->filePath());
     }
 
     /**

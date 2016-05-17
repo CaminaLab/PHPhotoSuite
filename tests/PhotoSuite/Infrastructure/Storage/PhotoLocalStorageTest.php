@@ -42,12 +42,12 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
     {
         $resourceId = new ResourceId('test');
         $photoName = new PhotoName('test');
-        $photoFile = PhotoFile::getInstanceBy(__DIR__ . '/photo_to_upload.png');
+        $photoFile = new PhotoFile(__DIR__ . '/photo_to_upload.png');
         $this->storage->upload(new Photo(
             $resourceId,
             $photoName,
-            $photoFile,
-            $this->storage->getBaseHttpUrlBy($resourceId)
+            $this->storage->getBaseHttpUrlBy($resourceId),
+            $photoFile
         ));
         $uploadedPhoto = $this->config->storagePath() . '/' .
                         $this->getMd5Path($resourceId->id()). '/' .
@@ -61,8 +61,8 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
                 new Photo(
                     $resourceId,
                     $photoName,
-                    PhotoFile::getInstanceBy($uploadedPhoto),
-                    $this->storage->getBaseHttpUrlBy($resourceId)
+                    $this->storage->getBaseHttpUrlBy($resourceId),
+                    new PhotoFile($uploadedPhoto)
                 )
             )
         );

@@ -10,24 +10,12 @@ class PhotoFile
     private $file;
 
     /**
-     * @param PhotoFormat $format
+     * @param string $filePath
      */
-    public function __construct(PhotoFormat $format)
+    public function __construct($filePath)
     {
-        $this->format = $format;
-    }
-
-    /**
-     * @param $filePath
-     * @return PhotoFile
-     */
-    public static function getInstanceBy($filePath)
-    {
-        $file = new File($filePath);
-        $instance = new self(new PhotoFormat($file->format()));
-        $instance->file = $file;
-
-        return $instance;
+        $this->file = new File($filePath);
+        $this->format = new PhotoFormat($this->file->format());
     }
 
     /**
