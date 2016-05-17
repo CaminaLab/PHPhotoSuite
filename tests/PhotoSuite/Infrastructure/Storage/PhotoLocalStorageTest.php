@@ -30,9 +30,11 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
     public function getBaseHttpUrlByResourceIdReturnsExpected()
     {
         $resourceId = new ResourceId('test');
+        $name = new PhotoName('test');
+        $file = new PhotoFile(__DIR__ . '/photo_to_upload.png');
         $this->assertEquals(
-            $this->urlBase . '/' . $this->getMd5Path($resourceId->id()),
-            $this->storage->getBaseHttpUrlBy($resourceId)->value()
+            implode('/', [$this->urlBase, $this->getMd5Path($resourceId->id()), $name->slug()]) . '.' . $file->format(),
+            $this->storage->getPhotoHttpUrlBy($resourceId, $name, $file)->value()
         );
     }
 
@@ -49,7 +51,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
             $photoId,
             $resourceId,
             $photoName,
-            $this->storage->getBaseHttpUrlBy($resourceId),
+            $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),
             $photoFile
         ));
         $uploadedPhoto = $this->config->storagePath() . '/' .
@@ -65,7 +67,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
                     $photoId,
                     $resourceId,
                     $photoName,
-                    $this->storage->getBaseHttpUrlBy($resourceId),
+                    $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),
                     new PhotoFile($uploadedPhoto)
                 )
             )

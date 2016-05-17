@@ -38,7 +38,7 @@ class PersistHandlerTest extends \PHPUnit_Framework_TestCase
     public function savePhotoWorks()
     {
         $this->markTestSkipped('Before repository should be refactorized');
-//        $request = new SavePhotoRequest('test', 'test', __DIR__ . '/../../Domain/pixel.png');
-//        $this->persistHander->save($request);
+        $request = new SavePhotoRequest('test', 'test', __DIR__ . '/../../Domain/pixel.png');
+        $this->persistHander->save($request);
     }
 }

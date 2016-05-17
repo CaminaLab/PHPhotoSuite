@@ -4,6 +4,7 @@ namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
 use PHPhotoSuit\PhotoSuite\Domain\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
@@ -33,9 +34,10 @@ class PersistHandler
     public function save(SavePhotoRequest $request)
     {
         $photo = $this->createPhotoBy($request);
-        if ($this->storage->upload($photo)) {
-            $this->repository->save($photo);
-        }
+        $newPathPhotoFile = $this->storage->upload($photo);
+        $photo->updatePhotoFile($newPathPhotoFile);
+        $this->repository->save($photo);
+        
     }
 
     /**
@@ -56,11 +58,14 @@ class PersistHandler
     private function createPhotoBy(SavePhotoRequest $request)
     {
         $resourceId = new ResourceId($request->resourceId());
+        $photoName = new PhotoName($request->name());
+        $photoFile = new PhotoFile($request->file());
         return new Photo(
+            new PhotoId(),
             $resourceId,
-            new PhotoName($request->name()),
-            PhotoFile::getInstanceBy($request->file()),
-            $this->storage->getBaseHttpUrlBy($resourceId)
+            $photoName,
+            $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),
+            $photoFile
         );
     }
 }

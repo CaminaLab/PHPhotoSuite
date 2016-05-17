@@ -84,4 +84,13 @@ class Photo
     {
         return $this->photoFile;
     }
+
+    /**
+     * @param PhotoFile $photoFile
+     * @return void
+     */
+    public function updatePhotoFile(PhotoFile $photoFile = null)
+    {
+        $this->photoFile = $photoFile;
+    }
 }

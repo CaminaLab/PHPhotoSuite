@@ -6,7 +6,7 @@ interface PhotoStorage
 {
     /**
      * @param Photo $photo
-     * @return boolean
+     * @return PhotoFile | null
      */
     public function upload(Photo $photo);
 
@@ -18,7 +18,9 @@ interface PhotoStorage
 
     /**
      * @param ResourceId $resourceId
+     * @param PhotoName $photoName
+     * @param PhotoFile $photoFile
      * @return HttpUrl
      */
-    public function getBaseHttpUrlBy(ResourceId $resourceId);
+    public function getPhotoHttpUrlBy(ResourceId $resourceId, PhotoName $photoName, PhotoFile $photoFile);
 }
