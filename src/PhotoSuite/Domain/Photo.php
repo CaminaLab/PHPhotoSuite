@@ -47,6 +47,14 @@ class Photo
     /**
      * @return string
      */
+    public function slug()
+    {
+        return $this->name->slug();
+    }
+
+    /**
+     * @return string
+     */
     public function getPhotoHttpUrl()
     {
         return $this->baseHttpUrl->value() .
@@ -55,4 +63,11 @@ class Photo
                 '.' . $this->file->format();
     }
 
+    /**
+     * @return File
+     */
+    public function file()
+    {
+        return $this->file;
+    }
 }
