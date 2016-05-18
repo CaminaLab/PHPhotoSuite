@@ -19,6 +19,10 @@ class InMemoryPhotoRepository implements PhotoRepository
     /** @var Photo[] */
     private $photos;
 
+    public function initialize()
+    {
+    }
+
     public function __construct()
     {
         $this->photos = [

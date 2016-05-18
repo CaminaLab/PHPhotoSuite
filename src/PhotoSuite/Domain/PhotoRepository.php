@@ -8,6 +8,12 @@ use PHPhotoSuit\PhotoSuite\Domain\Exception\PhotoNotFoundException;
 interface PhotoRepository
 {
     /**
+     * This method should be called once to create the schema of persistence system
+     * @return void
+     */
+    public function initialize();
+    
+    /**
      * @param ResourceId $resourceId
      * @return Photo
      * @throws PhotoNotFoundException
