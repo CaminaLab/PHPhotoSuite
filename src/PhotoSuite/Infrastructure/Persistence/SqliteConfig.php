@@ -14,9 +14,18 @@ class SqliteConfig
     public function __construct($dbPath)
     {
         if (!file_exists($dbPath)) {
-            throw new \Exception(sprintf('File %s not found', $dbPath));
+            throw new \InvalidArgumentException(sprintf('Sqlite DB file %s not found', $dbPath));
         }
         $this->dbPath = $dbPath;
+    }
+
+    /**
+     * @param array $config
+     * @return SqliteConfig
+     */
+    public static function getInstanceByArray(array $config)
+    {
+        return new self($config['dbpath']);
     }
 
     /**

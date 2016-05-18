@@ -19,7 +19,8 @@ class ArrayPhotoPresenter implements PhotoPresenter
             'id' => $photo->id(),
             'resourceId' => $photo->resourceId(),
             'name' => $photo->name(),
-            'url' => $photo->getPhotoHttpUrl()
+            'url' => $photo->getPhotoHttpUrl(),
+            'file' => is_null($photo->photoFile()) ? '' : $photo->photoFile()->filePath()
         ];
     }
 

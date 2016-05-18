@@ -24,6 +24,15 @@ class LocalStorageConfig
     }
 
     /**
+     * @param array $config
+     * @return LocalStorageConfig
+     */
+    public static function getInstanceByArray(array $config)
+    {
+        return new self($config['storagePath'], $config['baseUrl']);
+    }
+
+    /**
      * @return string
      */
     public function storagePath()
