@@ -41,6 +41,15 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function nonExistentDatabaseThrowsException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new LocalStorageConfig('', '');
+    }
+    
+    /**
+     * @test
+     */
     public function uploadAndDeleteOnePhotoWorks()
     {
         $photoId = new PhotoId();

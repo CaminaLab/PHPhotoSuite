@@ -17,7 +17,7 @@ class LocalStorageConfig
     public function __construct($storagePath, $urlBase)
     {
         if (!file_exists($storagePath)) {
-            throw new \Exception(sprintf('Storage path %s does not exists', $storagePath));
+            throw new \InvalidArgumentException(sprintf('Storage path %s does not exists', $storagePath));
         }
         $this->storagePath = realpath($storagePath);
         $this->urlBase = $urlBase;

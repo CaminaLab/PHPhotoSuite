@@ -53,6 +53,19 @@ class PhotoCollectionTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @test
+     */
+    public function offsetAccessMustThrowException()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->photoCollection[10000] = $this->getPhoto();
+        $this->photoCollection[10000] = $this->getPhoto();
+        $this->assertSame(0, $this->photoCollection->key());
+        unset($this->photoCollection[10000]);
+        $this->photoCollection[10000];
+    }
+
     private function getPhoto()
     {
         return $this->getMockBuilder(Photo::class)->disableOriginalConstructor()->getMock();
