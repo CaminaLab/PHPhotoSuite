@@ -1,5 +1,5 @@
 {
-  "name" : "PHPhotoSuit",
+  "name" : "caminalab/phphotosuit",
   "autoload": {
     "psr-4": {"PHPhotoSuit\\": "src/"}
   },
