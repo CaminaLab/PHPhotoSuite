@@ -20,10 +20,16 @@ interface PhotoStorage
     public function remove(Photo $photo);
 
     /**
+     * @param PhotoId $photoId
      * @param ResourceId $resourceId
      * @param PhotoName $photoName
      * @param PhotoFile $photoFile
      * @return HttpUrl
      */
-    public function getPhotoHttpUrlBy(ResourceId $resourceId, PhotoName $photoName, PhotoFile $photoFile);
+    public function getPhotoHttpUrlBy(
+        PhotoId $photoId,
+        ResourceId $resourceId,
+        PhotoName $photoName,
+        PhotoFile $photoFile
+    );
 }

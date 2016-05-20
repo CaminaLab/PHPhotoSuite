@@ -27,14 +27,21 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
         $this->storage = new PhotoLocalStorage($this->config);
     }
 
+    /**
+     * @test
+     */
     public function getBaseHttpUrlByResourceIdReturnsExpected()
     {
+        $photoId = new PhotoId();
         $resourceId = new ResourceId('test');
         $name = new PhotoName('test');
         $file = new PhotoFile(__DIR__ . '/photo_to_upload.png');
         $this->assertEquals(
-            implode('/', [$this->urlBase, $this->getMd5Path($resourceId->id()), $name->slug()]) . '.' . $file->format(),
-            $this->storage->getPhotoHttpUrlBy($resourceId, $name, $file)->value()
+            implode(
+                '/',
+                [$this->urlBase, $this->getMd5Path($resourceId->id()), $photoId->id(), $name->slug()]
+            ) . '.' . $file->format(),
+            $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $name, $file)->value()
         );
     }
 
@@ -60,11 +67,12 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
             $photoId,
             $resourceId,
             $photoName,
-            $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),
+            $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
             $photoFile
         ));
         $uploadedPhoto = $this->config->storagePath() . '/' .
                         $this->getMd5Path($resourceId->id()). '/' .
+                        $photoId->id() . '/' .
                         $photoName->slug() . '.' .
                         $photoFile->format();
 
@@ -76,7 +84,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
                     $photoId,
                     $resourceId,
                     $photoName,
-                    $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),
+                    $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
                     new PhotoFile($uploadedPhoto)
                 )
             )

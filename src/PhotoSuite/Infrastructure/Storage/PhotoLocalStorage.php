@@ -5,6 +5,7 @@ namespace PHPhotoSuit\PhotoSuite\Infrastructure\Storage;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
@@ -29,13 +30,13 @@ class PhotoLocalStorage implements PhotoStorage
      */
     public function upload(Photo $photo)
     {
-        $destinyPath = $this->localStorageConfig->storagePath() . '/' . $this->getMd5Path($photo->resourceId());
+        $destinyPath = $this->localStorageConfig->storagePath() . '/' .
+                        $this->getMd5Path($photo->resourceId()) . '/' .
+                        $photo->id();
         $this->createPathIfNotExists($destinyPath);
         $newPhotoFilePath = $destinyPath . '/' . $photo->slug() . '.' . $photo->photoFile()->format();
-        copy(
-            $photo->photoFile()->filePath(),
-            $newPhotoFilePath
-        );
+        copy($photo->photoFile()->filePath(), $newPhotoFilePath);
+
         return new PhotoFile($newPhotoFilePath);
     }
 
@@ -49,19 +50,24 @@ class PhotoLocalStorage implements PhotoStorage
     }
 
     /**
+     * @param PhotoId $photoId
      * @param ResourceId $resourceId
      * @param PhotoName $photoName
      * @param PhotoFile $photoFile
      * @return HttpUrl
      */
-    public function getPhotoHttpUrlBy(ResourceId $resourceId, PhotoName $photoName, PhotoFile $photoFile)
-    {
+    public function getPhotoHttpUrlBy(
+        PhotoId $photoId,
+        ResourceId $resourceId,
+        PhotoName $photoName,
+        PhotoFile $photoFile
+    ) {
         $urlBase = $this->localStorageConfig->urlBase();
         $urlBase = $urlBase[strlen($urlBase)-1] === '/' ? substr($urlBase, 0, -1) : $urlBase;
         return new HttpUrl(
             implode(
                 '/', 
-                [$urlBase, $this->getMd5Path($resourceId->id()), $photoName->slug()]
+                [$urlBase, $this->getMd5Path($resourceId->id()), $photoId->id(), $photoName->slug()]
             ) . '.' . $photoFile->format()
         );
     }
@@ -73,10 +79,8 @@ class PhotoLocalStorage implements PhotoStorage
      */
     private function getMd5Path($value)
     {
-        return substr(md5($value), 0, 2) . '/' .
-        substr(md5($value), 2, 2) . '/' .
-        substr(md5($value), 4, 2) . '/' .
-        substr(md5($value), 6, 2);
+        $md5 = md5($value);
+        return substr($md5, 0, 2) . '/' . substr($md5, 2, 2) . '/' . substr($md5, 4, 2) . '/' . substr($md5, 6, 2);
     }
 
     /**
