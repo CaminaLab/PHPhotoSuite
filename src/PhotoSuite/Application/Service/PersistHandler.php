@@ -62,7 +62,7 @@ class PersistHandler
         $photoName = new PhotoName($request->name());
         $photoFile = new PhotoFile($request->file());
         return new Photo(
-            new PhotoId(),
+            $this->repository->ensureUniquePhotoId(),
             $resourceId,
             $photoName,
             $this->storage->getPhotoHttpUrlBy($resourceId, $photoName, $photoFile),

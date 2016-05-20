@@ -117,4 +117,14 @@ class InMemoryPhotoRepository implements PhotoRepository
             unset($this->photos[$key]);
         }
     }
+
+    /**
+     * @param PhotoId|null $photoId
+     * @return PhotoId
+     */
+    public function ensureUniquePhotoId(PhotoId $photoId = null)
+    {
+        return new PhotoId();
+    }
+
 }

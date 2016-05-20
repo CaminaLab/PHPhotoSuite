@@ -46,4 +46,10 @@ interface PhotoRepository
      * @return void
      */
     public function delete(Photo $photo);
+
+    /**
+     * @param PhotoId $photoId
+     * @return PhotoId
+     */
+    public function ensureUniquePhotoId(PhotoId $photoId = null);
 }

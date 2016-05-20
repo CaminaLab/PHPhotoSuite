@@ -152,4 +152,21 @@ SQL;
             $photoFile
         );
     }
+
+    /**
+     * @param PhotoId|null $photoId
+     * @return PhotoId
+     */
+    public function ensureUniquePhotoId(PhotoId $photoId = null)
+    {
+        $photoId = is_null($photoId) ? new PhotoId() : $photoId;
+        $sentence  = $this->pdo->prepare("SELECT uuid FROM \"Photo\" WHERE uuid=:uuid LIMIT 1");
+        $sentence->bindParam(':uuid', $photoId->id());
+        $sentence->execute();
+        $row = $sentence->fetch(\PDO::FETCH_ASSOC);
+        if ($row) {
+            return $this->ensureUniquePhotoId();
+        }
+        return $photoId;
+    }
 }

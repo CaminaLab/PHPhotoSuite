@@ -94,6 +94,16 @@ class SqlitePhotoRepositoryTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @test
+     */
+    public function ensureUniquePhotoIdWorks()
+    {
+        $photoId = new PhotoId($this->photo->id());
+        $uniquePhotoId = $this->repository->ensureUniquePhotoId($photoId);
+        $this->assertTrue($photoId->id() !== $uniquePhotoId->id());
+    }
+
     public function tearDown()
     {
         unlink($this->dbPath);
