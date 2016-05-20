@@ -3,12 +3,12 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Presenter;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoCollection;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Presenter\ArrayPhotoPresenter;
 

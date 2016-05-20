@@ -2,7 +2,7 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\InvalidFormatException;
 
 class PhotoFormatTest extends \PHPUnit_Framework_TestCase

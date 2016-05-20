@@ -2,10 +2,10 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Storage;
 
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;

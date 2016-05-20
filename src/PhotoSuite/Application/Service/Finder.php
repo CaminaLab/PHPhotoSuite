@@ -2,8 +2,8 @@
 
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
-use PHPhotoSuit\PhotoSuite\Domain\PhotoPresenter;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoPresenter;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class Finder

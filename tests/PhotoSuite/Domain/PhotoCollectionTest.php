@@ -2,8 +2,8 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoCollection;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 
 class PhotoCollectionTest extends \PHPUnit_Framework_TestCase
 {

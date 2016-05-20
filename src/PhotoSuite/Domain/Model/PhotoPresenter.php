@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPhotoSuit\PhotoSuite\Domain;
+namespace PHPhotoSuit\PhotoSuite\Domain\Model;
 
 interface PhotoPresenter
 {

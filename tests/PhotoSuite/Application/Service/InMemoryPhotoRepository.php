@@ -5,13 +5,13 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Application\Service;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\CollectionNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\PhotoNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoCollection;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFormat;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class InMemoryPhotoRepository implements PhotoRepository

@@ -1,9 +1,10 @@
 <?php
 
-namespace PHPhotoSuit\PhotoSuite\Domain;
+namespace PHPhotoSuit\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\Exception\CollectionNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\PhotoNotFoundException;
+use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 interface PhotoRepository
 {

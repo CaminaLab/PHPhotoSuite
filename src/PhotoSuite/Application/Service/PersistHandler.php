@@ -2,12 +2,12 @@
 
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class PersistHandler

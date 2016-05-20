@@ -2,9 +2,9 @@
 
 namespace PHPhotoSuit\PhotoSuite\Infrastructure\Presenter;
 
-use PHPhotoSuit\PhotoSuite\Domain\Photo;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoCollection;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoPresenter;
+use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoPresenter;
 
 class ArrayPhotoPresenter implements PhotoPresenter
 {

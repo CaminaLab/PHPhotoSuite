@@ -2,7 +2,7 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
-use PHPhotoSuit\PhotoSuite\Domain\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 
 class PhotoFileTest extends \PHPUnit_Framework_TestCase
 {

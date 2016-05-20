@@ -2,7 +2,7 @@
 
 namespace PHPhotoSuit\Tests\PhotoSuite;
 
-use PHPhotoSuit\PhotoSuite\Domain\PhotoId;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use Ramsey\Uuid\Uuid;
 
 class PhotoIdTest extends \PHPUnit_Framework_TestCase

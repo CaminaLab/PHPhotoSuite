@@ -3,7 +3,7 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
 
 use PHPhotoSuit\PhotoSuite\Domain\Exception\InvalidLengthException;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 
 class PhotoNameTest extends \PHPUnit_Framework_TestCase
 {

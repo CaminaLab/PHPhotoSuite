@@ -4,8 +4,8 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Application\Service;
 
 use PHPhotoSuit\PhotoSuite\Application\Service\PersistHandler;
 use PHPhotoSuit\PhotoSuite\Application\Service\SavePhotoRequest;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoRepository;
-use PHPhotoSuit\PhotoSuite\Domain\PhotoStorage;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;
