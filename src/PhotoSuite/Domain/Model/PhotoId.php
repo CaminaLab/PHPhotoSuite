@@ -2,7 +2,7 @@
 
 namespace PHPhotoSuit\PhotoSuite\Domain\Model;
 
-use Ramsey\Uuid\Uuid;
+use PHPhotoSuit\PhotoSuite\Domain\RandomIdGenerator;
 
 class PhotoId
 {
@@ -16,8 +16,8 @@ class PhotoId
     public function __construct($id = null)
     {
         if (is_null($id)) {
-            $this->id = Uuid::uuid1()->toString();
-        } else if (Uuid::isValid($id)) {
+            $this->id = RandomIdGenerator::getBase36(8);
+        } else if (RandomIdGenerator::isValidBase36($id, 8)) {
             $this->id = $id;
         } else {
             throw new \InvalidArgumentException('Invalid uuid');

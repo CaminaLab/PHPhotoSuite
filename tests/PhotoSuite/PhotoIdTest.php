@@ -3,7 +3,7 @@
 namespace PHPhotoSuit\Tests\PhotoSuite;
 
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
-use Ramsey\Uuid\Uuid;
+use PHPhotoSuit\PhotoSuite\Domain\RandomIdGenerator;
 
 class PhotoIdTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class PhotoIdTest extends \PHPUnit_Framework_TestCase
      */
     public function PhotoIdWithUuidWorks()
     {
-        $this->assertInstanceOf(PhotoId::class, new PhotoId(Uuid::uuid1()->toString()));
+        $this->assertInstanceOf(PhotoId::class, new PhotoId(RandomIdGenerator::getBase36(8)));
     }
 
     /**
