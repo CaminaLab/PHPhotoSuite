@@ -20,7 +20,9 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
     public function photoWorks() {
         $photoFile = new PhotoFile(__DIR__ . '/pixel.png');
         $photoId = new PhotoId();
-        $photoAltCollection = new PhotoAltCollection([new PhotoAlt('alt', new Lang(Lang::LANGUAGE_EN))]);
+        $lang = new Lang(Lang::LANGUAGE_EN);
+        $alt = new PhotoAlt('alt', $lang);
+        $photoAltCollection = new PhotoAltCollection([$alt]);
         $photo = new Photo(
             $photoId,
             new ResourceId(1),
@@ -35,6 +37,8 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('testing', $photo->slug());
         $this->assertEquals('http://works', $photo->getPhotoHttpUrl());
         $this->assertEquals($photoAltCollection, $photo->altCollection());
+        $this->assertEquals($alt, $photo->altByLang($lang));
+        $this->assertNull($photo->altByLang(new Lang(Lang::LANGUAGE_ES)));
         $this->assertSame($photoFile, $photo->photoFile());
     }
 }

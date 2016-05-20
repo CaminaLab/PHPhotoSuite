@@ -109,8 +109,8 @@ class Photo
     public function altByLang(Lang $lang)
     {
         /** @var PhotoAlt $photoAlt */
-        foreach ($this->photoAltCollection as $photoAlt) {
-            if ($photoAlt->lang()->value() == $lang->value()) {
+        foreach ($this->altCollection as $photoAlt) {
+            if ($photoAlt->lang() === $lang->value()) {
                 return $photoAlt;
             }
         }
