@@ -1,11 +1,10 @@
 <?php
 
-namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
+namespace PHPhotoSuit\Tests\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;

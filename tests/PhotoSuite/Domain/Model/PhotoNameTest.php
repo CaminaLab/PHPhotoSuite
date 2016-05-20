@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPhotoSuit\Tests\PhotoSuite\Domain;
+namespace PHPhotoSuit\Tests\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\Exception\InvalidLengthException;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
