@@ -37,7 +37,6 @@ class PersistHandler
         $newPathPhotoFile = $this->storage->upload($photo);
         $photo->updatePhotoFile($newPathPhotoFile);
         $this->repository->save($photo);
-        
     }
 
     /**
