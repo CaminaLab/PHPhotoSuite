@@ -43,7 +43,9 @@ class PhotoSuiteTest extends \PHPUnit_Framework_TestCase
     public function photoSuitFunctionalTest()
     {
         $this->assertSame($this->photoSuite, PhotoSuite::create($this->config));
-        $this->photoSuite->savePhoto(new SavePhotoRequest('test', 'name', __DIR__ . '/photo_to_upload.png'));
+        $this->photoSuite->savePhoto(
+            new SavePhotoRequest('test', 'name', __DIR__ . '/photo_to_upload.png', 'alt', 'ES')
+        );
         $photo = $this->photoSuite->findPhotoOf('test');
         $this->assertFileExists($photo['file']);
         $this->assertTrue(count($this->photoSuite->findPhotoCollectionOf('test'))===1);

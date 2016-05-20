@@ -5,7 +5,10 @@ namespace PHPhotoSuit\PhotoSuite\Infrastructure\Persistence;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\CollectionNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\PhotoNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
+use PHPhotoSuit\PhotoSuite\Domain\Lang;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAlt;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
@@ -34,18 +37,25 @@ class SqlitePhotoRepository implements PhotoRepository
      */
     public function initialize()
     {
-        $createTable =<<<SQL
+        $createPhotoTable =<<<SQL
 CREATE TABLE IF NOT EXISTS "Photo" (
-    "uuid" TEXT NOT NULL,
+    "uuid" TEXT NOT NULL PRIMARY KEY,
     "resourceId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "httpUrl" TEXT NOT NULL,
     "filePath" TEXT
 )
 SQL;
-
-        $this->pdo->query($createTable);
-        $this->pdo->query("CREATE UNIQUE INDEX PK ON \"Photo\" (uuid);");
+        $this->pdo->query($createPhotoTable);
+        $createAlternativeTextTable =<<<SQL
+CREATE TABLE IF NOT EXISTS "AlternativeText" (
+    "photo_uuid" TEXT NOT NULL,
+    "alt" TEXT NOT NULL,
+    "lang" TEXT NOT NULL,
+    FOREIGN KEY(photo_uuid) REFERENCES Photo(uuid)
+)
+SQL;
+        $this->pdo->query($createAlternativeTextTable);
         $this->pdo->query("CREATE INDEX resource ON \"Photo\" (resourceId);");
     }
 
@@ -122,6 +132,26 @@ SQL;
         $filePathType = is_null($photo->photoFile()) ? \PDO::PARAM_NULL : \PDO::PARAM_STR;
         $sentence->bindParam(':filePath', $filePath, $filePathType);
         $sentence->execute();
+
+        foreach ($photo->altCollection() as $photoAlt) {
+            $this->saveAlternativeText(new PhotoId($photo->id()), $photoAlt);
+        }
+    }
+
+    /**
+     * @param PhotoId $photoId
+     * @param PhotoAlt $alt
+     */
+    private function saveAlternativeText(PhotoId $photoId, PhotoAlt $alt)
+    {
+        $sentence = $this->pdo->prepare(
+            "INSERT INTO AlternativeText(\"photo_uuid\", \"alt\", \"lang\") " .
+            "VALUES(:photo_uuid, :alt, :lang)"
+        );
+        $sentence->bindParam(':photo_uuid', $photoId->id());
+        $sentence->bindParam(':alt', $alt->name());
+        $sentence->bindParam(':lang', $alt->lang());
+        $sentence->execute();
     }
 
     /**
@@ -130,9 +160,7 @@ SQL;
      */
     public function delete(Photo $photo)
     {
-        $sentence = $this->pdo->prepare(
-            "DELETE FROM Photo WHERE uuid=:uuid LIMIT 1"
-        );
+        $sentence = $this->pdo->prepare("DELETE FROM Photo WHERE uuid=:uuid LIMIT 1");
         $sentence->bindParam(':uuid', $photo->id());
         $sentence->execute();
     }
@@ -144,11 +172,13 @@ SQL;
     public function createPhotoByRow($row)
     {
         $photoFile = !empty($row['filePath']) ? new PhotoFile($row['filePath']) : null;
+        $photoId = new PhotoId($row['uuid']);
         return new Photo(
             new PhotoId($row['uuid']),
             new ResourceId($row['resourceId']),
             new PhotoName($row['name']),
             new HttpUrl($row['httpUrl']),
+            $this->getAltCollectionBy($photoId),
             $photoFile
         );
     }
@@ -168,5 +198,24 @@ SQL;
             return $this->ensureUniquePhotoId();
         }
         return $photoId;
+    }
+
+    /**
+     * @param PhotoId $photoId
+     * @return PhotoAltCollection
+     */
+    private function getAltCollectionBy(PhotoId $photoId)
+    {
+        $sentence  = $this->pdo->prepare("SELECT * FROM \"AlternativeText\" WHERE photo_uuid=:uuid");
+        $sentence->bindParam(':uuid', $photoId->id());
+        $sentence->execute();
+        $photoAltCollection = new PhotoAltCollection();
+        $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
+        if ($rows) {
+            foreach ($rows as $row) {
+                $photoAltCollection[] = new PhotoAlt($row['alt'], new Lang($row['lang']));
+            }
+        }
+        return $photoAltCollection;
     }
 }

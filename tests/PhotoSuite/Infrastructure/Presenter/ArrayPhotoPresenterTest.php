@@ -4,9 +4,8 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Presenter;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
@@ -35,7 +34,8 @@ class ArrayPhotoPresenterTest extends \PHPUnit_Framework_TestCase
             $photoId,
             new ResourceId('1'),
             new PhotoName('test'),
-            new HttpUrl('http://test/1/test.jpg')
+            new HttpUrl('http://test/1/test.jpg'),
+            new PhotoAltCollection()
         );
         $this->photoPresenter = new ArrayPhotoPresenter();
     }

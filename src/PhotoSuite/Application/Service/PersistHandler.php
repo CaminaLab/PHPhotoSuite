@@ -2,7 +2,10 @@
 
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
+use PHPhotoSuit\PhotoSuite\Domain\Lang;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAlt;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
@@ -62,10 +65,11 @@ class PersistHandler
         $photoFile = new PhotoFile($request->file());
         $photoId = $this->repository->ensureUniquePhotoId();
         return new Photo(
-            $this->repository->ensureUniquePhotoId(),
+            $photoId,
             $resourceId,
             $photoName,
             $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
+            new PhotoAltCollection([new PhotoAlt($request->alt(), new Lang($request->lang()))]),
             $photoFile
         );
     }

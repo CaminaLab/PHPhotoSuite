@@ -3,6 +3,7 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Storage;
 
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
@@ -63,11 +64,13 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
         $resourceId = new ResourceId('test');
         $photoName = new PhotoName('test');
         $photoFile = new PhotoFile(__DIR__ . '/photo_to_upload.png');
+        $altCollection = new PhotoAltCollection();
         $this->storage->upload(new Photo(
             $photoId,
             $resourceId,
             $photoName,
             $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
+            $altCollection,
             $photoFile
         ));
         $uploadedPhoto = $this->config->storagePath() . '/' .
@@ -85,6 +88,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
                     $resourceId,
                     $photoName,
                     $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
+                    $altCollection,
                     new PhotoFile($uploadedPhoto)
                 )
             )

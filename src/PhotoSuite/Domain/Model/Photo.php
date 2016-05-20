@@ -3,6 +3,7 @@
 namespace PHPhotoSuit\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
+use PHPhotoSuit\PhotoSuite\Domain\Lang;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class Photo
@@ -15,15 +16,17 @@ class Photo
     private $name;
     /** @var HttpUrl */
     private $photoHttpUrl;
+    /** @var PhotoAltCollection */
+    private $altCollection;
     /** @var PhotoFile|null */
     private $photoFile;
 
     /**
-     * Photo constructor.
      * @param PhotoId $photoId
      * @param ResourceId $resourceId
      * @param PhotoName $name
      * @param HttpUrl $photoHttpUrl
+     * @param PhotoAltCollection $photoAltCollection
      * @param PhotoFile $photoFile
      */
     public function __construct(
@@ -31,12 +34,14 @@ class Photo
         ResourceId $resourceId,
         PhotoName $name,
         HttpUrl $photoHttpUrl,
+        PhotoAltCollection $photoAltCollection,
         PhotoFile $photoFile = null
     ) {
         $this->photoId = $photoId;
         $this->resourceId = $resourceId;
         $this->name = $name;
         $this->photoHttpUrl = $photoHttpUrl;
+        $this->altCollection = $photoAltCollection;
         $this->photoFile = $photoFile;
     }
 
@@ -95,5 +100,27 @@ class Photo
     public function updatePhotoFile(PhotoFile $photoFile = null)
     {
         $this->photoFile = $photoFile;
+    }
+
+    /**
+     * @param Lang $lang
+     * @return PhotoAlt
+     */
+    public function altByLang(Lang $lang)
+    {
+        /** @var PhotoAlt $photoAlt */
+        foreach ($this->photoAltCollection as $photoAlt) {
+            if ($photoAlt->lang()->value() == $lang->value()) {
+                return $photoAlt;
+            }
+        }
+    }
+
+    /**
+     * @return PhotoAltCollection
+     */
+    public function altCollection()
+    {
+        return $this->altCollection;
     }
 }

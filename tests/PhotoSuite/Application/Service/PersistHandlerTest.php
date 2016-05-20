@@ -39,7 +39,7 @@ class PersistHandlerTest extends \PHPUnit_Framework_TestCase
     public function saveAndDeletePhotoWorks()
     {
         $resourceId = 'newphoto';
-        $request = new SavePhotoRequest($resourceId, 'test', __DIR__ . '/pixel.png');
+        $request = new SavePhotoRequest($resourceId, 'test', __DIR__ . '/pixel.png', 'alt', 'ES');
         $this->persistHander->save($request);
         $photo = $this->repository->findOneBy(new ResourceId($resourceId));
         $this->assertFileExists($photo->photoFile()->filePath());

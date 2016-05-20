@@ -6,6 +6,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Exception\CollectionNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\Exception\PhotoNotFoundException;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
@@ -30,19 +31,22 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new PhotoId(),
                 new ResourceId(1),
                 new PhotoName('testing'),
-                new HttpUrl('http://works')
+                new HttpUrl('http://works'),
+                new PhotoAltCollection()
             ),
             $photo = new Photo(
                 new PhotoId(),
                 new ResourceId(1),
                 new PhotoName('testing'),
-                new HttpUrl('http://works')
+                new HttpUrl('http://works'),
+                new PhotoAltCollection()
             ),
             $photo = new Photo(
                 new PhotoId(),
                 new ResourceId(2),
                 new PhotoName('testing'),
-                new HttpUrl('http://works')
+                new HttpUrl('http://works'),
+                new PhotoAltCollection()
             )
         ];
     }
