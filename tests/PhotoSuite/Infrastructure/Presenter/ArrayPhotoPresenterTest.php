@@ -3,7 +3,9 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Presenter;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
+use PHPhotoSuit\PhotoSuite\Domain\Lang;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAlt;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
@@ -28,6 +30,12 @@ class ArrayPhotoPresenterTest extends \PHPUnit_Framework_TestCase
             'resourceId' => '1',
             'name' => 'test',
             'url' => 'http://test/1/test.jpg',
+            'alts' => [
+                'ES' => [
+                    'name' => 'alt',
+                    'slug' => 'alt'
+                ]
+            ],
             'file' => ''
         ];
         $this->photo = new Photo(
@@ -35,7 +43,7 @@ class ArrayPhotoPresenterTest extends \PHPUnit_Framework_TestCase
             new ResourceId('1'),
             new PhotoName('test'),
             new HttpUrl('http://test/1/test.jpg'),
-            new PhotoAltCollection()
+            new PhotoAltCollection([new PhotoAlt('alt' , new Lang(Lang::LANGUAGE_ES))])
         );
         $this->photoPresenter = new ArrayPhotoPresenter();
     }
