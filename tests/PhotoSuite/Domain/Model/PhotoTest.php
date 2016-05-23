@@ -21,14 +21,14 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
         $photoFile = new PhotoFile(__DIR__ . '/pixel.png');
         $photoId = new PhotoId();
         $lang = new Lang(Lang::LANGUAGE_EN);
-        $alt = new PhotoAlt('alt', $lang);
+        $alt = new PhotoAlt($photoId, 'alt', $lang);
         $photoAltCollection = new PhotoAltCollection([$alt]);
         $photo = new Photo(
             $photoId,
             new ResourceId(1),
             new PhotoName('testing'),
             new HttpUrl('http://works'),
-            new PhotoAltCollection([new PhotoAlt('alt', new Lang(Lang::LANGUAGE_EN))]),
+            new PhotoAltCollection([new PhotoAlt($photoId, 'alt', new Lang(Lang::LANGUAGE_EN))]),
             $photoFile
         );
         $this->assertEquals($photoId->id(), $photo->id());

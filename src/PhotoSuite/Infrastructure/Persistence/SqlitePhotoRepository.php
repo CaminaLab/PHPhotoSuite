@@ -213,7 +213,7 @@ SQL;
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
         if ($rows) {
             foreach ($rows as $row) {
-                $photoAltCollection[] = new PhotoAlt($row['alt'], new Lang($row['lang']));
+                $photoAltCollection[] = new PhotoAlt($photoId, $row['alt'], new Lang($row['lang']));
             }
         }
         return $photoAltCollection;

@@ -69,7 +69,7 @@ class PersistHandler
             $resourceId,
             $photoName,
             $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
-            new PhotoAltCollection([new PhotoAlt($request->alt(), new Lang($request->lang()))]),
+            new PhotoAltCollection([new PhotoAlt($photoId, $request->alt(), new Lang($request->lang()))]),
             $photoFile
         );
     }

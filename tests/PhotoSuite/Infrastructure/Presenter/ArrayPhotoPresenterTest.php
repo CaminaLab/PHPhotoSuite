@@ -43,7 +43,7 @@ class ArrayPhotoPresenterTest extends \PHPUnit_Framework_TestCase
             new ResourceId('1'),
             new PhotoName('test'),
             new HttpUrl('http://test/1/test.jpg'),
-            new PhotoAltCollection([new PhotoAlt('alt' , new Lang(Lang::LANGUAGE_ES))])
+            new PhotoAltCollection([new PhotoAlt($photoId, 'alt' , new Lang(Lang::LANGUAGE_ES))])
         );
         $this->photoPresenter = new ArrayPhotoPresenter();
     }
