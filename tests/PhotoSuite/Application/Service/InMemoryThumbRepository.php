@@ -55,4 +55,12 @@ class InMemoryThumbRepository implements PhotoThumbRepository
     {
         $this->thumbs[] = $thumb;
     }
+
+    /**
+     * This method should be called once to create the schema of persistence system
+     * @return void
+     */
+    public function initialize()
+    {
+    }
 }

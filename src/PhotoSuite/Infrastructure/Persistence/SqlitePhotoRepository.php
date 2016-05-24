@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS "AlternativeText" (
 SQL;
         $this->pdo->query($createAlternativeTextTable);
         $this->pdo->query("CREATE INDEX resource ON \"Photo\" (resourceId);");
+        $this->pdo->query("CREATE INDEX fk_alt_photo_uuid ON \"AlternativeText\" (photo_uuid);");
     }
 
     /**
