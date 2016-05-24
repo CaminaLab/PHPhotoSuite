@@ -6,10 +6,12 @@
   "autoload-dev": {
     "psr-4": { "PHPhotoSuit\\Tests\\": "tests/" }
   },
+  "bin": ["src/App/bin/photosuite"],
   "require": {
     "cocur/slugify": "^2.1",
     "imagine/imagine": "^0.6.3",
-    "jimmyoak/utilities": "^2.5"
+    "jimmyoak/utilities": "^2.5",
+    "symfony/console": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.3"
