@@ -14,8 +14,6 @@ class PhotoThumb
     private $photoThumbHttpUrl;
     /** @var PhotoThumbSize */
     private $photoThumbSize;
-    /** @var PhotoThumbMode */
-    private $mode;
     /** @var PhotoFile|null */
     private $photoThumbFile;
 
@@ -24,7 +22,6 @@ class PhotoThumb
      * @param PhotoId $photoId
      * @param HttpUrl $photoThumbHttpUrl
      * @param PhotoThumbSize $photoThumbSize
-     * @param PhotoThumbMode $mode
      * @param PhotoFile $photoThumbFile
      */
     public function __construct(
@@ -32,14 +29,12 @@ class PhotoThumb
         PhotoId $photoId, 
         HttpUrl $photoThumbHttpUrl, 
         PhotoThumbSize $photoThumbSize,
-        PhotoThumbMode $mode,
         PhotoFile $photoThumbFile = null
     ) {
         $this->thumbId = $thumbId;
         $this->photoId = $photoId;
         $this->photoThumbHttpUrl = $photoThumbHttpUrl;
         $this->photoThumbSize = $photoThumbSize;
-        $this->mode = $mode;
         $this->photoThumbFile = $photoThumbFile;
     }
 
@@ -84,21 +79,17 @@ class PhotoThumb
     }
 
     /**
-     * @return string
-     */
-    public function mode()
-    {
-        return $this->mode->value();
-    }
-
-    /**
      * @return null|PhotoFile
      */
     public function photoThumbFile()
     {
         return $this->photoThumbFile;
     }
-    
+
+    /**
+     * @param PhotoFile|null $photoThumbFile
+     * @return void
+     */
     public function updatePhotoThumbFile(PhotoFile $photoThumbFile = null)
     {
         $this->photoThumbFile = $photoThumbFile;

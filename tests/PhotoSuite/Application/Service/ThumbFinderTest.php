@@ -43,10 +43,7 @@ class ThumbFinderTest extends \PHPUnit_Framework_TestCase
     public function findThumbsOf()
     {
         $thumbRequestCollection = new ThumbRequestCollection();
-        $thumbRequestCollection[] = new ThumbRequest(
-            new PhotoThumbSize(1, 1),
-            new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
-        );
+        $thumbRequestCollection[] = new ThumbRequest(new PhotoThumbSize(1, 1));
         $request = new ThumbFinderRequest(new ResourceId(2), $thumbRequestCollection);
         $response = $this->thumbFinder->findThumbsOf($request);
 

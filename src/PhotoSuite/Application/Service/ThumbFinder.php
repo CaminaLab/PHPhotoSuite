@@ -12,6 +12,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbGenerator;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class ThumbFinder
@@ -58,8 +59,7 @@ class ThumbFinder
         foreach ($request->thumbRequestCollection() as $thumbRequest) {
             $thumb = $this->thumbRepository->findOneBy(
                 new PhotoId($photo->id()),
-                $thumbRequest->thumbSize(),
-                $thumbRequest->thumbMode()
+                $thumbRequest->thumbSize()
             );
             if (is_null($thumb)) {
                 $thumb = $this->createThumbFromOriginal($photo, $thumbRequest);
@@ -78,21 +78,21 @@ class ThumbFinder
     private function createThumbFromOriginal(Photo $photo, ThumbRequest $thumbRequest)
     {
         $thumb = $this->thumbGenerator->generate(
+            $this->thumbRepository->ensureUniqueThumbId(),
             $photo,
             $thumbRequest->thumbSize(),
-            $thumbRequest->thumbMode(),
             $this->photoStorage->getPhotoThumbHttpUrlBy(
                 new PhotoId($photo->id()),
                 new ResourceId($photo->resourceId()),
                 new PhotoName($photo->name()),
                 $thumbRequest->thumbSize(),
-                $thumbRequest->thumbMode(),
                 $this->thumbGenerator->conversionFormat()
             )
         );
         $photoFile = $this->photoStorage->uploadThumb($thumb);
         $thumb->updatePhotoThumbFile($photoFile);
         $this->thumbRepository->save($thumb);
+        
         return $thumb;
     }
 }

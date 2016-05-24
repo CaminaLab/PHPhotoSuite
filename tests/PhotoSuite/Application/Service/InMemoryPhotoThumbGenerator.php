@@ -16,20 +16,19 @@ class InMemoryPhotoThumbGenerator implements PhotoThumbGenerator
 {
 
     /**
+     * @param ThumbId $thumbId
      * @param Photo $photo
      * @param PhotoThumbSize $thumbSize
-     * @param PhotoThumbMode $thumbMode
      * @param HttpUrl $thumbHttpUrl
      * @return PhotoThumb
      */
-    public function generate(Photo $photo, PhotoThumbSize $thumbSize, PhotoThumbMode $thumbMode, HttpUrl $thumbHttpUrl)
+    public function generate(ThumbId $thumbId, Photo $photo, PhotoThumbSize $thumbSize, HttpUrl $thumbHttpUrl)
     {
         return new PhotoThumb(
             new ThumbId(),
             new PhotoId($photo->id()),
             $thumbHttpUrl,
-            $thumbSize,
-            $thumbMode
+            $thumbSize
         );
     }
 

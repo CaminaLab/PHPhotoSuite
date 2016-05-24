@@ -43,13 +43,7 @@ class ArrayThumbPresenterTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->thumb  = new PhotoThumb(
-            $thumbId,
-            new PhotoId(),
-            $url,
-            $thumbSize,
-            new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
-        );
+        $this->thumb  = new PhotoThumb($thumbId, new PhotoId(), $url, $thumbSize);
 
         $this->thumbCollection = new PhotoThumbCollection([$this->thumb]);
     }

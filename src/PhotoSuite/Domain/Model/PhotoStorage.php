@@ -44,7 +44,6 @@ interface PhotoStorage
      * @param ResourceId $resourceId
      * @param PhotoName $photoName
      * @param PhotoThumbSize $photoThumbSize
-     * @param PhotoThumbMode $photoThumbMode
      * @param PhotoFormat $photoFormat
      * @return HttpUrl
      */
@@ -53,7 +52,6 @@ interface PhotoStorage
         ResourceId $resourceId,
         PhotoName $photoName,
         PhotoThumbSize $photoThumbSize,
-        PhotoThumbMode $photoThumbMode,
         PhotoFormat $photoFormat
     );
 }

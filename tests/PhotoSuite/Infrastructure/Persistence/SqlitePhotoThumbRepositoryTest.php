@@ -28,6 +28,8 @@ class SqlitePhotoThumbRepositoryTest extends \PHPUnit_Framework_TestCase
     private $photoId;
     /** @var Photo */
     private $photo;
+    /** @var ThumbId */
+    private $thumbId;
     /** @var PhotoThumb */
     private $thumb;
 
@@ -48,12 +50,12 @@ class SqlitePhotoThumbRepositoryTest extends \PHPUnit_Framework_TestCase
             $httpUrl,
             new PhotoAltCollection()
         );
+        $this->thumbId = new ThumbId();
         $this->thumb = new PhotoThumb(
-            new ThumbId(),
+            $this->thumbId,
             $this->photoId,
             $httpUrl,
-            new PhotoThumbSize(1,1),
-            new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
+            new PhotoThumbSize(1,1)
         );
         $this->photoRepository->save($this->photo);
         $this->thumbRepository->save($this->thumb);
@@ -68,15 +70,21 @@ class SqlitePhotoThumbRepositoryTest extends \PHPUnit_Framework_TestCase
             $this->thumb,
             $this->thumbRepository->findOneBy(
                 $this->photoId,
-                new PhotoThumbSize(1,1),
-                new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
+                new PhotoThumbSize(1,1)
             )
         );
         $this->assertNull($this->thumbRepository->findOneBy(
             new PhotoId(),
-            new PhotoThumbSize(1,1),
-            new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
+            new PhotoThumbSize(1,1)
         ));
+    }
+
+    /**
+     * @test
+     */
+    public function ensureUniqueThumbId()
+    {
+        $this->assertNotEquals($this->thumbRepository->ensureUniqueThumbId($this->thumbId), $this->thumbId);
     }
 
     public function tearDown()

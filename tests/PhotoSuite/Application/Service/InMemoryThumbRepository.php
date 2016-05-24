@@ -5,7 +5,6 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Application\Service;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbMode;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
@@ -15,6 +14,14 @@ class InMemoryThumbRepository implements PhotoThumbRepository
     /** @var PhotoThumb[] */
     private $thumbs;
 
+    /**
+     * This method should be called once to create the schema of persistence system
+     * @return void
+     */
+    public function initialize()
+    {
+    }
+
     public function __construct()
     {
         $this->thumbs = [
@@ -22,8 +29,7 @@ class InMemoryThumbRepository implements PhotoThumbRepository
                 new ThumbId(),
                 new PhotoId(),
                 new HttpUrl('http://test'),
-                new PhotoThumbSize(1,1),
-                new PhotoThumbMode(PhotoThumbMode::THUMBNAIL_OUTBOUND)
+                new PhotoThumbSize(1,1)
             )
         ];
     }
@@ -31,16 +37,14 @@ class InMemoryThumbRepository implements PhotoThumbRepository
     /**
      * @param PhotoId $photoId
      * @param PhotoThumbSize $thumbSize
-     * @param PhotoThumbMode $thumbMode
      * @return PhotoThumb | null
      */
-    public function findOneBy(PhotoId $photoId, PhotoThumbSize $thumbSize, PhotoThumbMode $thumbMode)
+    public function findOneBy(PhotoId $photoId, PhotoThumbSize $thumbSize)
     {
         foreach ($this->thumbs as $thumb) {
             if ($photoId->id() === $thumb->id() &&
                 $thumbSize->height() === $thumb->height() &&
-                $thumbSize->width() === $thumb->width() &&
-                $thumbMode->value() == $thumb->mode()) {
+                $thumbSize->width() === $thumb->width()) {
 
                 return $thumb;
             }
@@ -57,10 +61,11 @@ class InMemoryThumbRepository implements PhotoThumbRepository
     }
 
     /**
-     * This method should be called once to create the schema of persistence system
-     * @return void
+     * @param ThumbId $thumbId
+     * @return ThumbId
      */
-    public function initialize()
+    public function ensureUniqueThumbId(ThumbId $thumbId = null)
     {
+        return new ThumbId();
     }
 }

@@ -13,14 +13,19 @@ interface PhotoThumbRepository
     /**
      * @param PhotoId $photoId
      * @param PhotoThumbSize $thumbSize
-     * @param PhotoThumbMode $thumbMode
      * @return PhotoThumb | null
      */
-    public function findOneBy(PhotoId $photoId, PhotoThumbSize $thumbSize, PhotoThumbMode $thumbMode);
+    public function findOneBy(PhotoId $photoId, PhotoThumbSize $thumbSize);
 
     /**
      * @param PhotoThumb $thumb
      * @return void
      */
     public function save(PhotoThumb $thumb);
+
+    /**
+     * @param ThumbId $thumbId
+     * @return ThumbId
+     */
+    public function ensureUniqueThumbId(ThumbId $thumbId = null);
 }

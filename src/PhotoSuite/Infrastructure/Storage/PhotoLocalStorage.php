@@ -112,7 +112,6 @@ class PhotoLocalStorage implements PhotoStorage
      * @param ResourceId $resourceId
      * @param PhotoName $photoName
      * @param PhotoThumbSize $photoThumbSize
-     * @param PhotoThumbMode $photoThumbMode
      * @param PhotoFormat $photoFormat
      * @return HttpUrl
      */
@@ -121,7 +120,6 @@ class PhotoLocalStorage implements PhotoStorage
         ResourceId $resourceId,
         PhotoName $photoName,
         PhotoThumbSize $photoThumbSize,
-        PhotoThumbMode $photoThumbMode,
         PhotoFormat $photoFormat
     ) {
         $urlBase = $this->localStorageConfig->urlBase();
@@ -134,7 +132,7 @@ class PhotoLocalStorage implements PhotoStorage
                     $this->getMd5Path($resourceId->id()),
                     $photoId->id(),
                     $photoName->slug(),
-                    '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width() . '_' . $photoThumbMode->value()
+                    '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width()
                 ]
             ) . '.' . $photoFormat->value()
         );
