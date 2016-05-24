@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPhotoSuit\Tests\PhotoSuite;
+namespace PHPhotoSuit\Tests\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\RandomIdGenerator;

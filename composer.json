@@ -7,7 +7,9 @@
     "psr-4": { "PHPhotoSuit\\Tests\\": "tests/" }
   },
   "require": {
-    "cocur/slugify": "^2.1"
+    "cocur/slugify": "^2.1",
+    "imagine/imagine": "^0.6.3",
+    "jimmyoak/utilities": "^2.5"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.3"

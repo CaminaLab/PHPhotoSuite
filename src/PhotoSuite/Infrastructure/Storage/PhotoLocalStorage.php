@@ -5,9 +5,13 @@ namespace PHPhotoSuit\PhotoSuite\Infrastructure\Storage;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbMode;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class PhotoLocalStorage implements PhotoStorage
@@ -92,5 +96,47 @@ class PhotoLocalStorage implements PhotoStorage
         if (!file_exists($destinyPath)) {
             mkdir($destinyPath, 0775, true);
         }
+    }
+
+    /**
+     * @param PhotoThumb $thumb
+     * @return PhotoFile | null
+     */
+    public function uploadThumb(PhotoThumb $thumb)
+    {
+        // TODO: Implement uploadThumb() method.
+    }
+
+    /**
+     * @param PhotoId $photoId
+     * @param ResourceId $resourceId
+     * @param PhotoName $photoName
+     * @param PhotoThumbSize $photoThumbSize
+     * @param PhotoThumbMode $photoThumbMode
+     * @param PhotoFormat $photoFormat
+     * @return HttpUrl
+     */
+    public function getPhotoThumbHttpUrlBy(
+        PhotoId $photoId,
+        ResourceId $resourceId,
+        PhotoName $photoName,
+        PhotoThumbSize $photoThumbSize,
+        PhotoThumbMode $photoThumbMode,
+        PhotoFormat $photoFormat
+    ) {
+        $urlBase = $this->localStorageConfig->urlBase();
+        $urlBase = $urlBase[strlen($urlBase)-1] === '/' ? substr($urlBase, 0, -1) : $urlBase;
+        return new HttpUrl(
+            implode(
+                '/',
+                [
+                    $urlBase,
+                    $this->getMd5Path($resourceId->id()),
+                    $photoId->id(),
+                    $photoName->slug(),
+                    '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width() . '_' . $photoThumbMode->value()
+                ]
+            ) . '.' . $photoFormat->value()
+        );
     }
 }

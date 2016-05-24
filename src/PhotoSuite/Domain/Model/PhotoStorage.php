@@ -32,4 +32,28 @@ interface PhotoStorage
         PhotoName $photoName,
         PhotoFile $photoFile
     );
+
+    /**
+     * @param PhotoThumb $thumb
+     * @return PhotoFile | null
+     */
+    public function uploadThumb(PhotoThumb $thumb);
+
+    /**
+     * @param PhotoId $photoId
+     * @param ResourceId $resourceId
+     * @param PhotoName $photoName
+     * @param PhotoThumbSize $photoThumbSize
+     * @param PhotoThumbMode $photoThumbMode
+     * @param PhotoFormat $photoFormat
+     * @return HttpUrl
+     */
+    public function getPhotoThumbHttpUrlBy(
+        PhotoId $photoId,
+        ResourceId $resourceId,
+        PhotoName $photoName,
+        PhotoThumbSize $photoThumbSize,
+        PhotoThumbMode $photoThumbMode,
+        PhotoFormat $photoFormat
+    );
 }
