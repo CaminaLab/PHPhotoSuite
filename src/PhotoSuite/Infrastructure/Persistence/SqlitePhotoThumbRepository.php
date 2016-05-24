@@ -6,7 +6,6 @@ use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbMode;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
