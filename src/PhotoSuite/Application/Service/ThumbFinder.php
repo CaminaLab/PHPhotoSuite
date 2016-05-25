@@ -61,16 +61,17 @@ class ThumbFinder
         return $this->thumbPresenter->write($photo, $thumbCollection);
     }
 
-    public function findCollectionThumbsOf(ThumbFinderRequest $request)
+    /**
+     * @param ThumbFinderRequest $request
+     * @return mixed
+     */
+    public function findPhotoCollectionWithItsThumbsOf(ThumbFinderRequest $request)
     {
         $photoCollection = $this->photoRepository->findCollectionBy($request->resourceId());
-
         $collectionOfThumbCollection = new CollectionOfThumbCollection();
-
         foreach ($photoCollection as $photo) {
             $collectionOfThumbCollection[] = $this->getThumbsCollectionOfPhoto($request->thumbRequestCollection(), $photo);
         }
-
         return $this->thumbPresenter->writeCollection($photoCollection, $collectionOfThumbCollection);
     }
 

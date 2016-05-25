@@ -31,14 +31,16 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new ResourceId(1),
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
-                new PhotoAltCollection()
+                new PhotoAltCollection(),
+                new PhotoFile(__DIR__ . '/pixel.png')
             ),
             $photo = new Photo(
                 new PhotoId(),
                 new ResourceId(1),
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
-                new PhotoAltCollection()
+                new PhotoAltCollection(),
+                new PhotoFile(__DIR__ . '/pixel.png')
             ),
             $photo = new Photo(
                 new PhotoId(),

@@ -50,4 +50,18 @@ class ThumbFinderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('thumbs', $response);
         $this->assertTrue(count($response['thumbs']) === 1);
     }
+
+    /**
+     * @test
+     */
+    public function findPhotoCollectionWithItsThumbsOf()
+    {
+        $thumbRequestCollection = new ThumbRequestCollection();
+        $thumbRequestCollection[] = new ThumbRequest(new PhotoThumbSize(1, 1));
+        $request = new ThumbFinderRequest(new ResourceId(1), $thumbRequestCollection);
+
+        $response = $this->thumbFinder->findPhotoCollectionWithItsThumbsOf($request);
+
+        $this->assertCount(2, $response);
+    }
 }
