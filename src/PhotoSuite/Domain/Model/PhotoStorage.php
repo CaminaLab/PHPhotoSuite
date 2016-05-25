@@ -35,9 +35,10 @@ interface PhotoStorage
 
     /**
      * @param PhotoThumb $thumb
-     * @return PhotoFile | null
+     * @param Photo $photo
+     * @return null|PhotoFile
      */
-    public function uploadThumb(PhotoThumb $thumb);
+    public function uploadThumb(PhotoThumb $thumb, Photo $photo);
 
     /**
      * @param PhotoId $photoId

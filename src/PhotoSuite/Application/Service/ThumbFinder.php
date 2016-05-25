@@ -89,7 +89,7 @@ class ThumbFinder
                 $this->thumbGenerator->conversionFormat()
             )
         );
-        $photoFile = $this->photoStorage->uploadThumb($thumb);
+        $photoFile = $this->photoStorage->uploadThumb($thumb, $photo);
         $thumb->updatePhotoThumbFile($photoFile);
         $this->thumbRepository->save($thumb);
         

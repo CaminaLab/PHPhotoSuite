@@ -9,7 +9,6 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
-use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFormat;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
@@ -46,7 +45,8 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new ResourceId(2),
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
-                new PhotoAltCollection()
+                new PhotoAltCollection(),
+                new PhotoFile(__DIR__ . '/pixel.png')
             )
         ];
     }

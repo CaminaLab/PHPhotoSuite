@@ -100,11 +100,26 @@ class PhotoLocalStorage implements PhotoStorage
 
     /**
      * @param PhotoThumb $thumb
-     * @return PhotoFile | null
+     * @param Photo $photo
+     * @return null|PhotoFile
      */
-    public function uploadThumb(PhotoThumb $thumb)
+    public function uploadThumb(PhotoThumb $thumb, Photo $photo)
     {
-        // TODO: Implement uploadThumb() method.
+        $destinyPath = $this->localStorageConfig->storagePath() . '/' .
+                        $this->getMd5Path($photo->resourceId()) . '/' .
+                        $photo->id();
+        $this->createPathIfNotExists($destinyPath);
+        $newPhotoFilePath = sprintf(
+            '%s/%s_%dx%d.%s',
+            $destinyPath,
+            $photo->slug(),
+            $thumb->width(),
+            $thumb->height(),
+            $thumb->photoThumbFile()->format()
+        );
+        copy($photo->photoFile()->filePath(), $newPhotoFilePath);
+
+        return new PhotoFile($newPhotoFilePath);
     }
 
     /**

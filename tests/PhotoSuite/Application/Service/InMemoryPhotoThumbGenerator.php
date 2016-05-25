@@ -28,7 +28,8 @@ class InMemoryPhotoThumbGenerator implements PhotoThumbGenerator
             new ThumbId(),
             new PhotoId($photo->id()),
             $thumbHttpUrl,
-            $thumbSize
+            $thumbSize,
+            $photo->photoFile()
         );
     }
 
