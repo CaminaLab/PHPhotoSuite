@@ -64,15 +64,15 @@ class PhotoSuite
 
     /**
      * @param $resource
-     * @param array $thumbsSizes
+     * @param array $thumbSizes
      * @return mixed
      */
-    public function findPhotoThumbsOf($resource, array $thumbsSizes)
+    public function findPhotoThumbsOf($resource, array $thumbSizes)
     {
         $thumbRequestCollection = new ThumbRequestCollection();
-        foreach ($thumbsSizes as $thumbSize) {
+        foreach ($thumbSizes as $thumbSize) {
             $thumbRequestCollection[] = new ThumbRequest(
-                new PhotoThumbSize($thumbSize['height'], $thumbsSizes['width'])
+                new PhotoThumbSize($thumbSize['height'], $thumbSize['width'])
             );
         }
         $request = new ThumbFinderRequest(new ResourceId($resource), $thumbRequestCollection);
@@ -82,15 +82,15 @@ class PhotoSuite
 
     /**
      * @param $resource
-     * @param array $thumbsSizes
+     * @param array $thumbSizes
      * @return mixed
      */
-    public function findPhotoCollectionWithItsThumbsOf($resource, array $thumbsSizes)
+    public function findPhotoCollectionWithItsThumbsOf($resource, array $thumbSizes)
     {
         $thumbRequestCollection = new ThumbRequestCollection();
-        foreach ($thumbsSizes as $thumbSize) {
+        foreach ($thumbSizes as $thumbSize) {
             $thumbRequestCollection[] = new ThumbRequest(
-                new PhotoThumbSize($thumbSize['height'], $thumbsSizes['width'])
+                new PhotoThumbSize($thumbSize['height'], $thumbSize['width'])
             );
         }
         $request = new ThumbFinderRequest(new ResourceId($resource), $thumbRequestCollection);
