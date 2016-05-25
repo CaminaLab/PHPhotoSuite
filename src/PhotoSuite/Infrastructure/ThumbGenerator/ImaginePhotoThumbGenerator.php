@@ -44,7 +44,7 @@ class ImaginePhotoThumbGenerator implements PhotoThumbGenerator
      */
     public function generate(ThumbId $thumbId, Photo $photo, PhotoThumbSize $thumbSize, HttpUrl $thumbHttpUrl)
     {
-        $photoFile = $photo->photoFile() ? $this->downloadPhoto($photo->getPhotoHttpUrl()) : $photo->photoFile();
+        $photoFile = $photo->photoFile() ? $photo->photoFile() : $this->downloadPhoto($photo->getPhotoHttpUrl());
         $thumbFile = $this->thumbGeneratorConfig->tempPath() . '/' . $thumbId->id() . '.' . self::CONVERSION_FORMAT;
         
         $target = new Box($thumbSize->width(), $thumbSize->height());
