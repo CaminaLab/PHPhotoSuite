@@ -139,6 +139,7 @@ class PhotoLocalStorage implements PhotoStorage
     ) {
         $urlBase = $this->localStorageConfig->urlBase();
         $urlBase = $urlBase[strlen($urlBase)-1] === '/' ? substr($urlBase, 0, -1) : $urlBase;
+        
         return new HttpUrl(
             implode(
                 '/',
@@ -146,10 +147,9 @@ class PhotoLocalStorage implements PhotoStorage
                     $urlBase,
                     $this->getMd5Path($resourceId->id()),
                     $photoId->id(),
-                    $photoName->slug(),
-                    '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width()
+                    $photoName->slug()
                 ]
-            ) . '.' . $photoFormat->value()
+            ) . '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width() . '.' . $photoFormat->value()
         );
     }
 }
