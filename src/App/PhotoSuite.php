@@ -79,6 +79,24 @@ class PhotoSuite
 
         return $this->getThumbsFinder()->findPhotoThumbsOf($request);
     }
+
+    /**
+     * @param $resource
+     * @param array $thumbsSizes
+     * @return mixed
+     */
+    public function findPhotoCollectionWithItsThumbsOf($resource, array $thumbsSizes)
+    {
+        $thumbRequestCollection = new ThumbRequestCollection();
+        foreach ($thumbsSizes as $thumbSize) {
+            $thumbRequestCollection[] = new ThumbRequest(
+                new PhotoThumbSize($thumbSize['height'], $thumbsSizes['width'])
+            );
+        }
+        $request = new ThumbFinderRequest(new ResourceId($resource), $thumbRequestCollection);
+
+        return $this->getThumbsFinder()->findPhotoCollectionWithItsThumbsOf($request);
+    }
     
     /**
      * @param SavePhotoRequest $request
