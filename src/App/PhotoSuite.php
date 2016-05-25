@@ -67,7 +67,7 @@ class PhotoSuite
      * @param array $thumbsSizes
      * @return mixed
      */
-    public function findThumbsOf($resource, array $thumbsSizes)
+    public function findPhotoThumbsOf($resource, array $thumbsSizes)
     {
         $thumbRequestCollection = new ThumbRequestCollection();
         foreach ($thumbsSizes as $thumbSize) {
@@ -77,7 +77,7 @@ class PhotoSuite
         }
         $request = new ThumbFinderRequest(new ResourceId($resource), $thumbRequestCollection);
 
-        return $this->getThumbsFinder()->findThumbsOf($request);
+        return $this->getThumbsFinder()->findPhotoThumbsOf($request);
     }
     
     /**

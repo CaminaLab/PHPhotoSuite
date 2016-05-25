@@ -3,7 +3,9 @@
 namespace PHPhotoSuit\Tests\PhotoSuite\Infrastructure\Presenter;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
+use PHPhotoSuit\PhotoSuite\Domain\Model\CollectionOfThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
@@ -51,7 +53,7 @@ class ArrayThumbPresenterTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function arrayThumbsPresenterWorks()
+    public function write()
     {
         $this->assertEquals(
             $this->expected,
@@ -61,6 +63,19 @@ class ArrayThumbPresenterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function writeCollection()
+    {
+        $this->assertEquals(
+            [$this->expected],
+            $this->arrayThumbPresenter->writeCollection(
+                new PhotoCollection([$this->getMockBuilder(Photo::class)->disableOriginalConstructor()->getMock()]),
+                new CollectionOfThumbCollection([$this->thumbCollection])
+            )
+        );
+    }
     /**
      * @return PhotoPresenter
      */

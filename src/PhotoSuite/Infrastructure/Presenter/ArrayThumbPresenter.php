@@ -2,7 +2,9 @@
 
 namespace PHPhotoSuit\PhotoSuite\Infrastructure\Presenter;
 
+use PHPhotoSuit\PhotoSuite\Domain\Model\CollectionOfThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbCollection;
@@ -51,5 +53,21 @@ class ArrayThumbPresenter implements PhotoThumbPresenter
             ];
         }
         return $thumbs;
+    }
+
+    /**
+     * @param PhotoCollection $photoCollection
+     * @param CollectionOfThumbCollection $collectionOfThumbCollection
+     * @return mixed
+     */
+    public function writeCollection(
+        PhotoCollection $photoCollection,
+        CollectionOfThumbCollection $collectionOfThumbCollection
+    ) {
+        $response = [];
+        foreach ($photoCollection as $key => $photo) {
+            $response[] = $this->write($photo, $collectionOfThumbCollection[$key]);
+        }
+        return $response;
     }
 }

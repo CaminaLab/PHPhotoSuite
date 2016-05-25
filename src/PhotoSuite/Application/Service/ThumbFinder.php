@@ -2,6 +2,7 @@
 
 namespace PHPhotoSuit\PhotoSuite\Application\Service;
 
+use PHPhotoSuit\PhotoSuite\Domain\Model\CollectionOfThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\Photo;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
@@ -12,7 +13,6 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbGenerator;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
-use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class ThumbFinder
@@ -50,13 +50,40 @@ class ThumbFinder
         $this->thumbPresenter = $thumbPresenter;
     }
 
-
-    public function findThumbsOf(ThumbFinderRequest $request)
+    /**
+     * @param ThumbFinderRequest $request
+     * @return mixed
+     */
+    public function findPhotoThumbsOf(ThumbFinderRequest $request)
     {
         $photo = $this->photoRepository->findOneBy($request->resourceId());
+        $thumbCollection = $this->getThumbsCollectionOfPhoto($request->thumbRequestCollection(), $photo);
+        return $this->thumbPresenter->write($photo, $thumbCollection);
+    }
+
+    public function findCollectionThumbsOf(ThumbFinderRequest $request)
+    {
+        $photoCollection = $this->photoRepository->findCollectionBy($request->resourceId());
+
+        $collectionOfThumbCollection = new CollectionOfThumbCollection();
+
+        foreach ($photoCollection as $photo) {
+            $collectionOfThumbCollection[] = $this->getThumbsCollectionOfPhoto($request->thumbRequestCollection(), $photo);
+        }
+
+        return $this->thumbPresenter->writeCollection($photoCollection, $collectionOfThumbCollection);
+    }
+
+    /**
+     * @param ThumbRequestCollection $thumbRequestCollection
+     * @param Photo $photo
+     * @return array|PhotoThumbCollection
+     */
+    public function getThumbsCollectionOfPhoto(ThumbRequestCollection $thumbRequestCollection, Photo $photo)
+    {
         $thumbCollection = new PhotoThumbCollection();
         /** @var ThumbRequest $thumbRequest */
-        foreach ($request->thumbRequestCollection() as $thumbRequest) {
+        foreach ($thumbRequestCollection as $thumbRequest) {
             $thumb = $this->thumbRepository->findOneBy(
                 new PhotoId($photo->id()),
                 $thumbRequest->thumbSize()
@@ -66,8 +93,7 @@ class ThumbFinder
             }
             $thumbCollection[] = $thumb;
         }
-
-        return $this->thumbPresenter->write($photo, $thumbCollection);
+        return $thumbCollection;
     }
 
     /**
@@ -92,7 +118,7 @@ class ThumbFinder
         $photoFile = $this->photoStorage->uploadThumb($thumb, $photo);
         $thumb->updatePhotoThumbFile($photoFile);
         $this->thumbRepository->save($thumb);
-        
+
         return $thumb;
     }
 }

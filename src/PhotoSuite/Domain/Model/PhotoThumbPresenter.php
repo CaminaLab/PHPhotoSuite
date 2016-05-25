@@ -10,4 +10,14 @@ interface PhotoThumbPresenter
      * @return mixed
      */
     public function write(Photo $photo, PhotoThumbCollection $thumbCollection);
+
+    /**
+     * @param PhotoCollection $photoCollection
+     * @param CollectionOfThumbCollection $collectionOfThumbCollection
+     * @return mixed
+     */
+    public function writeCollection(
+        PhotoCollection $photoCollection,
+        CollectionOfThumbCollection $collectionOfThumbCollection
+    );
 }
