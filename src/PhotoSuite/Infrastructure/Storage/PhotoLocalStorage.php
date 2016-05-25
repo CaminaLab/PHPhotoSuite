@@ -117,7 +117,7 @@ class PhotoLocalStorage implements PhotoStorage
             $thumb->height(),
             $thumb->photoThumbFile()->format()
         );
-        copy($photo->photoFile()->filePath(), $newPhotoFilePath);
+        copy($thumb->photoThumbFile()->filePath(), $newPhotoFilePath);
 
         return new PhotoFile($newPhotoFilePath);
     }
