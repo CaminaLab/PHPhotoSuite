@@ -49,7 +49,8 @@ class ArrayThumbPresenter implements PhotoThumbPresenter
                 'id' => $thumb->id(),
                 'url' => $thumb->photoThumbHttpUrl(),
                 'height' => $thumb->height(),
-                'width' => $thumb->width()
+                'width' => $thumb->width(),
+                'file' => is_null($thumb->photoThumbFile()) ? '' : $thumb->photoThumbFile()->filePath()
             ];
         }
         return $thumbs;

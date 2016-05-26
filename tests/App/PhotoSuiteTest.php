@@ -49,8 +49,14 @@ class PhotoSuiteTest extends \PHPUnit_Framework_TestCase
         );
         $photo = $this->photoSuite->findPhotoOf('test');
         $this->assertFileExists($photo['file']);
+        $photoWhitThumb = $this->photoSuite->findPhotoThumbsOf('test', [['height' => 1, 'width' => 1]]);
+        $this->assertFileExists($photoWhitThumb['thumbs'][0]['file']);
         $this->assertTrue(count($this->photoSuite->findPhotoCollectionOf('test'))===1);
+        $this->assertCount(1, $this->photoSuite->findPhotoCollectionWithItsThumbsOf(
+            'test', [['height' => 1, 'width' => 1]]
+        ));
         $this->photoSuite->deletePhoto($photo['id']);
+        $this->assertFileNotExists($photoWhitThumb['thumbs'][0]['file']);
         $this->assertFileNotExists($photo['file']);
     }
     

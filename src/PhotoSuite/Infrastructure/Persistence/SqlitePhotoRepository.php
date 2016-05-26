@@ -29,7 +29,7 @@ class SqlitePhotoRepository implements PhotoRepository
     public function __construct(SqliteConfig $sqliteConfig)
     {
         $this->sqliteConfig = $sqliteConfig;
-        $this->pdo = new \PDO('sqlite:' . $this->sqliteConfig->dbPath());
+        $this->pdo = SqlitePDORegistry::getInstance($this->sqliteConfig->dbPath());
     }
 
     /**
@@ -38,7 +38,7 @@ class SqlitePhotoRepository implements PhotoRepository
     public function initialize()
     {
         $createPhotoTable =<<<SQL
-CREATE TABLE IF NOT EXISTS "Photo" (
+CREATE TABLE IF NOT EXISTS "photo" (
     "uuid" TEXT NOT NULL PRIMARY KEY,
     "resourceId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -48,16 +48,16 @@ CREATE TABLE IF NOT EXISTS "Photo" (
 SQL;
         $this->pdo->query($createPhotoTable);
         $createAlternativeTextTable =<<<SQL
-CREATE TABLE IF NOT EXISTS "AlternativeText" (
+CREATE TABLE IF NOT EXISTS "alternative_text" (
     "photo_uuid" TEXT NOT NULL,
     "alt" TEXT NOT NULL,
     "lang" TEXT NOT NULL,
-    FOREIGN KEY(photo_uuid) REFERENCES Photo(uuid)
+    FOREIGN KEY(photo_uuid) REFERENCES photo(uuid)
 )
 SQL;
         $this->pdo->query($createAlternativeTextTable);
-        $this->pdo->query("CREATE INDEX resource ON \"Photo\" (resourceId);");
-        $this->pdo->query("CREATE INDEX fk_alt_photo_uuid ON \"AlternativeText\" (photo_uuid);");
+        $this->pdo->query("CREATE INDEX resource ON \"photo\" (resourceId);");
+        $this->pdo->query("CREATE INDEX fk_alt_photo_uuid ON \"alternative_text\" (photo_uuid);");
     }
 
     /**
@@ -67,7 +67,7 @@ SQL;
      */
     public function findOneBy(ResourceId $resourceId)
     {
-        $sentence  = $this->pdo->prepare("SELECT * FROM \"Photo\" WHERE resourceId=:resourceId LIMIT 1");
+        $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE resourceId=:resourceId LIMIT 1");
         $sentence->bindParam(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
@@ -84,7 +84,7 @@ SQL;
      */
     public function findById(PhotoId $photoId)
     {
-        $sentence  = $this->pdo->prepare("SELECT * FROM \"Photo\" WHERE uuid=:uuid LIMIT 1");
+        $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE uuid=:uuid LIMIT 1");
         $sentence->bindParam(':uuid', $photoId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
@@ -101,7 +101,7 @@ SQL;
      */
     public function findCollectionBy(ResourceId $resourceId)
     {
-        $sentence  = $this->pdo->prepare("SELECT * FROM \"Photo\" WHERE resourceId=:resourceId");
+        $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE resourceId=:resourceId");
         $sentence->bindParam(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
         $sentence->execute();
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
@@ -146,7 +146,7 @@ SQL;
     private function saveAlternativeText(PhotoId $photoId, PhotoAlt $alt)
     {
         $sentence = $this->pdo->prepare(
-            "INSERT INTO AlternativeText(\"photo_uuid\", \"alt\", \"lang\") " .
+            "INSERT INTO alternative_text(\"photo_uuid\", \"alt\", \"lang\") " .
             "VALUES(:photo_uuid, :alt, :lang)"
         );
         $sentence->bindParam(':photo_uuid', $photoId->id());
@@ -191,7 +191,7 @@ SQL;
     public function ensureUniquePhotoId(PhotoId $photoId = null)
     {
         $photoId = is_null($photoId) ? new PhotoId() : $photoId;
-        $sentence  = $this->pdo->prepare("SELECT uuid FROM \"Photo\" WHERE uuid=:uuid LIMIT 1");
+        $sentence  = $this->pdo->prepare("SELECT uuid FROM \"photo\" WHERE uuid=:uuid LIMIT 1");
         $sentence->bindParam(':uuid', $photoId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
@@ -207,7 +207,7 @@ SQL;
      */
     private function getAltCollectionBy(PhotoId $photoId)
     {
-        $sentence  = $this->pdo->prepare("SELECT * FROM \"AlternativeText\" WHERE photo_uuid=:uuid");
+        $sentence  = $this->pdo->prepare("SELECT * FROM \"alternative_text\" WHERE photo_uuid=:uuid");
         $sentence->bindParam(':uuid', $photoId->id());
         $sentence->execute();
         $photoAltCollection = new PhotoAltCollection();

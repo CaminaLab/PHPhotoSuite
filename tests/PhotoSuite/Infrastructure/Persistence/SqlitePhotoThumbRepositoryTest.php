@@ -13,6 +13,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqliteConfig;
+use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePDORegistry;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoRepository;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoThumbRepository;
 
@@ -89,6 +90,7 @@ class SqlitePhotoThumbRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        SqlitePDORegistry::removeInstance($this->dbPath);
         unlink($this->dbPath);
     }
 }

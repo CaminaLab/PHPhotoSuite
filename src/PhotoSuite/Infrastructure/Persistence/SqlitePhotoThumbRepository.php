@@ -26,7 +26,7 @@ class SqlitePhotoThumbRepository implements PhotoThumbRepository
     public function __construct(SqliteConfig $sqliteConfig)
     {
         $this->sqliteConfig = $sqliteConfig;
-        $this->pdo = new \PDO('sqlite:' . $this->sqliteConfig->dbPath());
+        $this->pdo = SqlitePDORegistry::getInstance($this->sqliteConfig->dbPath());
     }
 
     /**
@@ -36,7 +36,7 @@ class SqlitePhotoThumbRepository implements PhotoThumbRepository
     public function initialize()
     {
         $createPhotoTable =<<<SQL
-CREATE TABLE IF NOT EXISTS "PhotoThumb" (
+CREATE TABLE IF NOT EXISTS "photo_thumb" (
     "uuid" TEXT NOT NULL PRIMARY KEY,
     "photo_uuid" TEXT NOT NULL,
     "httpUrl" TEXT NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS "PhotoThumb" (
 )
 SQL;
         $this->pdo->query($createPhotoTable);
-        $this->pdo->query("CREATE INDEX fk_thumb_photo_uuid ON \"PhotoThumb\" (photo_uuid);");
+        $this->pdo->query("CREATE INDEX fk_thumb_photo_uuid ON \"photo_thumb\" (photo_uuid);");
     }
 
     /**
@@ -58,7 +58,7 @@ SQL;
     public function findOneBy(PhotoId $photoId, PhotoThumbSize $thumbSize)
     {
         $sql = <<<SQL
-SELECT * FROM "PhotoThumb" WHERE photo_uuid=:photo_uuid AND height=:height AND width=:width
+SELECT * FROM "photo_thumb" WHERE photo_uuid=:photo_uuid AND height=:height AND width=:width
 SQL;
 
         $sentence  = $this->pdo->prepare($sql);
@@ -80,7 +80,7 @@ SQL;
     public function save(PhotoThumb $thumb)
     {
         $sentence = $this->pdo->prepare(
-            "INSERT INTO PhotoThumb(\"uuid\",\"photo_uuid\",\"httpUrl\",\"height\",\"width\",\"filePath\") " .
+            "INSERT INTO photo_thumb(\"uuid\",\"photo_uuid\",\"httpUrl\",\"height\",\"width\",\"filePath\") " .
             "VALUES(:uuid, :photo_uuid, :httpUrl, :height, :width, :filePath)"
         );
         $sentence->bindParam(':uuid', $thumb->id(), \PDO::PARAM_STR);
@@ -100,7 +100,7 @@ SQL;
      */
     public function delete(PhotoThumb $thumb)
     {
-        $sentence = $this->pdo->prepare("DELETE FROM PhotoThumb WHERE uuid=:uuid LIMIT 1");
+        $sentence = $this->pdo->prepare("DELETE FROM photo_thumb WHERE uuid=:uuid LIMIT 1");
         $sentence->bindParam(':uuid', $thumb->id());
         $sentence->execute();
     }
@@ -124,7 +124,7 @@ SQL;
     public function ensureUniqueThumbId(ThumbId $thumbId = null)
     {
         $thumbId = is_null($thumbId) ? new ThumbId() : $thumbId;
-        $sentence  = $this->pdo->prepare("SELECT uuid FROM \"PhotoThumb\" WHERE uuid=:uuid LIMIT 1");
+        $sentence  = $this->pdo->prepare("SELECT uuid FROM \"photo_thumb\" WHERE uuid=:uuid LIMIT 1");
         $sentence->bindParam(':uuid', $thumbId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
@@ -140,9 +140,7 @@ SQL;
      */
     public function findCollectionBy(PhotoId $photoId)
     {
-        $sentence = $this->pdo->prepare("SELECT * FROM \"PhotoThumb\" WHERE photo_uuid=:photo_uuid");
-        $sentence->bindParam(':photo_uuid', $photoId->id());
-
+        $sentence = $this->pdo->query("SELECT * FROM photo_thumb WHERE photo_uuid=\"" . $photoId->id()."\"");
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
         $thumbCollection = new PhotoThumbCollection();
         if ($rows) {
