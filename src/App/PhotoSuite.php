@@ -107,6 +107,14 @@ class PhotoSuite
     }
 
     /**
+     * @param SavePhotoRequest $request
+     */
+    public function saveUniquePhoto(SavePhotoRequest $request)
+    {
+        $this->getPersistHandlerInstance()->saveUnique($request);
+    }
+
+    /**
      * @param string $id
      */
     public function deletePhoto($id)

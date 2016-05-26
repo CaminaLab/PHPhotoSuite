@@ -44,14 +44,14 @@ class PhotoSuiteTest extends \PHPUnit_Framework_TestCase
     public function photoSuitFunctionalTest()
     {
         $this->assertSame($this->photoSuite, PhotoSuite::create($this->config));
-        $this->photoSuite->savePhoto(
-            new SavePhotoRequest('test', 'name', __DIR__ . '/photo_to_upload.png', 'alt', 'ES')
-        );
+        $request = new SavePhotoRequest('test', 'name', __DIR__ . '/photo_to_upload.png', 'alt', 'ES');
+        $this->photoSuite->savePhoto($request);
+        $this->photoSuite->saveUniquePhoto($request);
         $photo = $this->photoSuite->findPhotoOf('test');
         $this->assertFileExists($photo['file']);
         $photoWhitThumb = $this->photoSuite->findPhotoThumbsOf('test', [['height' => 1, 'width' => 1]]);
         $this->assertFileExists($photoWhitThumb['thumbs'][0]['file']);
-        $this->assertTrue(count($this->photoSuite->findPhotoCollectionOf('test'))===1);
+        $this->assertCount(1, $this->photoSuite->findPhotoCollectionOf('test'));
         $this->assertCount(1, $this->photoSuite->findPhotoCollectionWithItsThumbsOf(
             'test', [['height' => 1, 'width' => 1]]
         ));
