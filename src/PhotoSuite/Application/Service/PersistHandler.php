@@ -61,9 +61,8 @@ class PersistHandler
         try {
             $photo = $this->repository->findOneBy(new ResourceId($request->resourceId()));
             $this->delete($photo->id());
-        } catch (PhotoNotFoundException $e) {
-            $this->save($request);
-        }
+        } catch (PhotoNotFoundException $e) {}
+        $this->save($request);
     }
 
     /**
