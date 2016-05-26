@@ -5,6 +5,7 @@ namespace PHPhotoSuit\Tests\PhotoSuite\Application\Service;
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
@@ -61,11 +62,40 @@ class InMemoryThumbRepository implements PhotoThumbRepository
     }
 
     /**
+     * @param PhotoThumb $photoThumb
+     * @return void
+     */
+    public function delete(PhotoThumb $photoThumb)
+    {
+        foreach ($this->thumbs as $key => $thumb) {
+            if ($thumb->id() === $photoThumb->id()) {
+                unset($this->thumbs[$key]);
+                return;
+            }
+        }
+    }
+
+    /**
      * @param ThumbId $thumbId
      * @return ThumbId
      */
     public function ensureUniqueThumbId(ThumbId $thumbId = null)
     {
         return new ThumbId();
+    }
+
+    /**
+     * @param PhotoId $photoId
+     * @return PhotoThumbCollection
+     */
+    public function findCollectionBy(PhotoId $photoId)
+    {
+        $thumbCollection = new PhotoThumbCollection();
+        foreach ($this->thumbs as $thumb) {
+            if ($thumb->photoId() === $photoId->id()) {
+                $thumbCollection[] = $thumb;
+            }
+        }
+        return $thumbCollection;
     }
 }

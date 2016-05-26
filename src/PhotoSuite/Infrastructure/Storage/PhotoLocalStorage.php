@@ -152,4 +152,13 @@ class PhotoLocalStorage implements PhotoStorage
             ) . '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width() . '.' . $photoFormat->value()
         );
     }
+
+    /**
+     * @param PhotoThumb $thumb
+     * @return boolean
+     */
+    public function removeThumb(PhotoThumb $thumb)
+    {
+        return unlink($thumb->photoThumbFile()->filePath());
+    }
 }

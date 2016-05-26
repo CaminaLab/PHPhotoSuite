@@ -24,8 +24,20 @@ interface PhotoThumbRepository
     public function save(PhotoThumb $thumb);
 
     /**
+     * @param PhotoThumb $thumb
+     * @return void
+     */
+    public function delete(PhotoThumb $thumb);
+
+    /**
      * @param ThumbId $thumbId
      * @return ThumbId
      */
     public function ensureUniqueThumbId(ThumbId $thumbId = null);
+
+    /**
+     * @param PhotoId $photoId
+     * @return PhotoThumbCollection
+     */
+    public function findCollectionBy(PhotoId $photoId);
 }

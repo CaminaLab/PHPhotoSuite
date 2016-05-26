@@ -20,6 +20,12 @@ interface PhotoStorage
     public function remove(Photo $photo);
 
     /**
+     * @param PhotoThumb $thumb
+     * @return boolean
+     */
+    public function removeThumb(PhotoThumb $thumb);
+
+    /**
      * @param PhotoId $photoId
      * @param ResourceId $resourceId
      * @param PhotoName $photoName

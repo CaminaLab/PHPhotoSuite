@@ -34,6 +34,7 @@ class PhotoSuiteTest extends \PHPUnit_Framework_TestCase
         $this->config = Config::getInstanceByArray($this->configAr);
         file_put_contents($this->configAr['repository']['config']['dbpath'], '');
         $this->config->getPhotoRepository()->initialize();
+        $this->config->getPhotoThumbRepository()->initialize();
         $this->photoSuite = PhotoSuite::create($this->config);
     }
 

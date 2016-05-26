@@ -6,6 +6,7 @@ use PHPhotoSuit\PhotoSuite\Application\Service\PersistHandler;
 use PHPhotoSuit\PhotoSuite\Application\Service\SavePhotoRequest;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;
@@ -16,6 +17,8 @@ class PersistHandlerTest extends \PHPUnit_Framework_TestCase
     private $persistHander;
     /** @var PhotoRepository */
     private $repository;
+    /** @var PhotoThumbRepository */
+    private $thumbRepository;
     /** @var PhotoStorage */
     private $storage;
     /** @var LocalStorageConfig */
@@ -28,9 +31,10 @@ class PersistHandlerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = new InMemoryPhotoRepository();
+        $this->thumbRepository = new InMemoryThumbRepository();
         $this->localStorageConfig = new LocalStorageConfig($this->storagePath, $this->httpUrlBasePath);
         $this->storage = new PhotoLocalStorage($this->localStorageConfig);
-        $this->persistHander = new PersistHandler($this->repository, $this->storage);
+        $this->persistHander = new PersistHandler($this->repository, $this->storage, $this->thumbRepository);
     }
 
     /**

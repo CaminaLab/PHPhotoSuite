@@ -6,6 +6,7 @@ use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
+use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
@@ -93,6 +94,17 @@ SQL;
         $sentence->execute();
     }
 
+    /**
+     * @param PhotoThumb $thumb
+     * @return void
+     */
+    public function delete(PhotoThumb $thumb)
+    {
+        $sentence = $this->pdo->prepare("DELETE FROM PhotoThumb WHERE uuid=:uuid LIMIT 1");
+        $sentence->bindParam(':uuid', $thumb->id());
+        $sentence->execute();
+    }
+
     private function createPhotoThumbByRow($row)
     {
         $photoFile = !empty($row['filePath']) ? new PhotoFile($row['filePath']) : null;
@@ -120,5 +132,24 @@ SQL;
             return $this->ensureUniqueThumbId();
         }
         return $thumbId;
+    }
+
+    /**
+     * @param PhotoId $photoId
+     * @return PhotoThumbCollection
+     */
+    public function findCollectionBy(PhotoId $photoId)
+    {
+        $sentence = $this->pdo->prepare("SELECT * FROM \"PhotoThumb\" WHERE photo_uuid=:photo_uuid");
+        $sentence->bindParam(':photo_uuid', $photoId->id());
+
+        $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
+        $thumbCollection = new PhotoThumbCollection();
+        if ($rows) {
+            foreach ($rows as $row) {
+                $thumbCollection[] = $this->createPhotoThumbByRow($row);
+            }
+        }
+        return $thumbCollection;
     }
 }

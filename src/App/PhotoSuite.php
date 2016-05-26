@@ -133,7 +133,8 @@ class PhotoSuite
         if (is_null($this->persistHandler)) {
             $this->persistHandler = new PersistHandler(
                 $this->config->getPhotoRepository(), 
-                $this->config->getPhotoStorage()
+                $this->config->getPhotoStorage(),
+                $this->config->getPhotoThumbRepository()
             );
         }
         return $this->persistHandler;
