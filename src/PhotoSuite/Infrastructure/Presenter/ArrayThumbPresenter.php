@@ -45,7 +45,7 @@ class ArrayThumbPresenter implements PhotoThumbPresenter
         $thumbs = [];
         /** @var PhotoThumb $thumb */
         foreach ($thumbCollection as $thumb) {
-            $thumbs[] = [
+            $thumbs[$thumb->width() . 'x' . $thumb->height()] = [
                 'id' => $thumb->id(),
                 'url' => $thumb->photoThumbHttpUrl(),
                 'height' => $thumb->height(),

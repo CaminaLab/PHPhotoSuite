@@ -34,10 +34,9 @@ class ArrayThumbPresenterTest extends \PHPUnit_Framework_TestCase
         $thumbId = new ThumbId();
         $url = new HttpUrl('http://test');
         $thumbSize = new PhotoThumbSize(15, 10);
-        $thumbFile =
         $this->expected = [
             'thumbs' => [
-                0 => [
+                '10x15' => [
                     'id' => $thumbId->id(),
                     'url' => $url->value(),
                     'height' => $thumbSize->height(),
