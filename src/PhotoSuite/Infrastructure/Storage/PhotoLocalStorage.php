@@ -149,7 +149,7 @@ class PhotoLocalStorage implements PhotoStorage
                     $photoId->id(),
                     $photoName->slug()
                 ]
-            ) . '_' . $photoThumbSize->height() . 'x' . $photoThumbSize->width() . '.' . $photoFormat->value()
+            ) . '_' . $photoThumbSize->width() . 'x' . $photoThumbSize->height() . '.' . $photoFormat->value()
         );
     }
 
