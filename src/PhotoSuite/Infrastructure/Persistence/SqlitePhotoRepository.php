@@ -68,7 +68,7 @@ SQL;
     public function findOneBy(ResourceId $resourceId)
     {
         $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE resourceId=:resourceId LIMIT 1");
-        $sentence->bindParam(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
+        $sentence->bindValue(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
@@ -85,7 +85,7 @@ SQL;
     public function findById(PhotoId $photoId)
     {
         $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE uuid=:uuid LIMIT 1");
-        $sentence->bindParam(':uuid', $photoId->id());
+        $sentence->bindValue(':uuid', $photoId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
@@ -102,7 +102,7 @@ SQL;
     public function findCollectionBy(ResourceId $resourceId)
     {
         $sentence  = $this->pdo->prepare("SELECT * FROM \"photo\" WHERE resourceId=:resourceId");
-        $sentence->bindParam(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
+        $sentence->bindValue(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
         $sentence->execute();
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
         if ($rows) {
@@ -125,13 +125,13 @@ SQL;
             "INSERT INTO Photo(\"uuid\", \"resourceId\", \"name\", \"httpUrl\", \"filePath\") " .
             "VALUES(:uuid, :resourceId, :name, :httpUrl, :filePath)"
         );
-        $sentence->bindParam(':uuid', $photo->id());
-        $sentence->bindParam(':resourceId', $photo->resourceId());
-        $sentence->bindParam(':name', $photo->name());
-        $sentence->bindParam(':httpUrl', $photo->getPhotoHttpUrl());
+        $sentence->bindValue(':uuid', $photo->id());
+        $sentence->bindValue(':resourceId', $photo->resourceId());
+        $sentence->bindValue(':name', $photo->name());
+        $sentence->bindValue(':httpUrl', $photo->getPhotoHttpUrl());
         $filePath = is_null($photo->photoFile()) ? null : $photo->photoFile()->filePath();
         $filePathType = is_null($photo->photoFile()) ? \PDO::PARAM_NULL : \PDO::PARAM_STR;
-        $sentence->bindParam(':filePath', $filePath, $filePathType);
+        $sentence->bindValue(':filePath', $filePath, $filePathType);
         $sentence->execute();
 
         foreach ($photo->altCollection() as $photoAlt) {
@@ -149,9 +149,9 @@ SQL;
             "INSERT INTO alternative_text(\"photo_uuid\", \"alt\", \"lang\") " .
             "VALUES(:photo_uuid, :alt, :lang)"
         );
-        $sentence->bindParam(':photo_uuid', $photoId->id());
-        $sentence->bindParam(':alt', $alt->name());
-        $sentence->bindParam(':lang', $alt->lang());
+        $sentence->bindValue(':photo_uuid', $photoId->id());
+        $sentence->bindValue(':alt', $alt->name());
+        $sentence->bindValue(':lang', $alt->lang());
         $sentence->execute();
     }
 
@@ -162,7 +162,7 @@ SQL;
     public function delete(Photo $photo)
     {
         $sentence = $this->pdo->prepare("DELETE FROM Photo WHERE uuid=:uuid LIMIT 1");
-        $sentence->bindParam(':uuid', $photo->id());
+        $sentence->bindValue(':uuid', $photo->id());
         $sentence->execute();
     }
 
@@ -192,7 +192,7 @@ SQL;
     {
         $photoId = is_null($photoId) ? new PhotoId() : $photoId;
         $sentence  = $this->pdo->prepare("SELECT uuid FROM \"photo\" WHERE uuid=:uuid LIMIT 1");
-        $sentence->bindParam(':uuid', $photoId->id());
+        $sentence->bindValue(':uuid', $photoId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
@@ -208,7 +208,7 @@ SQL;
     private function getAltCollectionBy(PhotoId $photoId)
     {
         $sentence  = $this->pdo->prepare("SELECT * FROM \"alternative_text\" WHERE photo_uuid=:uuid");
-        $sentence->bindParam(':uuid', $photoId->id());
+        $sentence->bindValue(':uuid', $photoId->id());
         $sentence->execute();
         $photoAltCollection = new PhotoAltCollection();
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);

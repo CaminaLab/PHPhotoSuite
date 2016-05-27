@@ -62,9 +62,9 @@ SELECT * FROM "photo_thumb" WHERE photo_uuid=:photo_uuid AND height=:height AND 
 SQL;
 
         $sentence  = $this->pdo->prepare($sql);
-        $sentence->bindParam(':photo_uuid',$photoId->id(), \PDO::PARAM_STR);
-        $sentence->bindParam(':height', $thumbSize->height(), \PDO::PARAM_INT);
-        $sentence->bindParam(':width', $thumbSize->width(), \PDO::PARAM_INT);
+        $sentence->bindValue(':photo_uuid',$photoId->id(), \PDO::PARAM_STR);
+        $sentence->bindValue(':height', $thumbSize->height(), \PDO::PARAM_INT);
+        $sentence->bindValue(':width', $thumbSize->width(), \PDO::PARAM_INT);
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
 
@@ -83,14 +83,14 @@ SQL;
             "INSERT INTO photo_thumb(\"uuid\",\"photo_uuid\",\"httpUrl\",\"height\",\"width\",\"filePath\") " .
             "VALUES(:uuid, :photo_uuid, :httpUrl, :height, :width, :filePath)"
         );
-        $sentence->bindParam(':uuid', $thumb->id(), \PDO::PARAM_STR);
-        $sentence->bindParam(':photo_uuid', $thumb->photoId(), \PDO::PARAM_STR);
-        $sentence->bindParam(':httpUrl', $thumb->photoThumbHttpUrl(), \PDO::PARAM_STR);
-        $sentence->bindParam(':height', $thumb->height(), \PDO::PARAM_INT);
-        $sentence->bindParam(':width', $thumb->width(), \PDO::PARAM_INT);
+        $sentence->bindValue(':uuid', $thumb->id(), \PDO::PARAM_STR);
+        $sentence->bindValue(':photo_uuid', $thumb->photoId(), \PDO::PARAM_STR);
+        $sentence->bindValue(':httpUrl', $thumb->photoThumbHttpUrl(), \PDO::PARAM_STR);
+        $sentence->bindValue(':height', $thumb->height(), \PDO::PARAM_INT);
+        $sentence->bindValue(':width', $thumb->width(), \PDO::PARAM_INT);
         $filePath = is_null($thumb->photoThumbFile()) ? null : $thumb->photoThumbFile()->filePath();
         $filePathType = is_null($thumb->photoThumbFile()) ? \PDO::PARAM_NULL : \PDO::PARAM_STR;
-        $sentence->bindParam(':filePath', $filePath, $filePathType);
+        $sentence->bindValue(':filePath', $filePath, $filePathType);
         $sentence->execute();
     }
 
@@ -101,7 +101,7 @@ SQL;
     public function delete(PhotoThumb $thumb)
     {
         $sentence = $this->pdo->prepare("DELETE FROM photo_thumb WHERE uuid=:uuid LIMIT 1");
-        $sentence->bindParam(':uuid', $thumb->id());
+        $sentence->bindValue(':uuid', $thumb->id());
         $sentence->execute();
     }
 
@@ -125,7 +125,7 @@ SQL;
     {
         $thumbId = is_null($thumbId) ? new ThumbId() : $thumbId;
         $sentence  = $this->pdo->prepare("SELECT uuid FROM \"photo_thumb\" WHERE uuid=:uuid LIMIT 1");
-        $sentence->bindParam(':uuid', $thumbId->id());
+        $sentence->bindValue(':uuid', $thumbId->id());
         $sentence->execute();
         $row = $sentence->fetch(\PDO::FETCH_ASSOC);
         if ($row) {
