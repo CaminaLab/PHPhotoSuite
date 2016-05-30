@@ -92,8 +92,8 @@ class AmazonS3PhotoStorage implements PhotoStorage
         PhotoName $photoName,
         PhotoFile $photoFile
     ) {
-        return $this->config->urlBase() . '/' .
-        $this->getPhotoUri($photoId->id(), $photoName->slug(), $photoFile->format());
+        return new HttpUrl($this->config->urlBase() . '/' .
+        $this->getPhotoUri($photoId->id(), $photoName->slug(), $photoFile->format()));
     }
 
     /**
@@ -132,14 +132,14 @@ class AmazonS3PhotoStorage implements PhotoStorage
         PhotoThumbSize $photoThumbSize,
         PhotoFormat $photoFormat
     ) {
-        return $this->config->urlBase() . '/' .
+        return new HttpUrl($this->config->urlBase() . '/' .
             $this->getThumbUri(
                 $photoId->id(),
                 $photoName->slug(),
                 $photoThumbSize->width(),
                 $photoThumbSize->height(),
                 $photoFormat->value()
-            );
+            ));
     }
 
     /**
