@@ -13,6 +13,8 @@ use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoRepository;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoThumbRepository;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Presenter\ArrayPhotoPresenter;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Presenter\ArrayThumbPresenter;
+use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\AmazonS3Config;
+use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\AmazonS3PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;
 use PHPhotoSuit\PhotoSuite\Infrastructure\ThumbGenerator\ImaginePhotoThumbGenerator;
@@ -69,7 +71,17 @@ class Config
      */
     public function getPhotoStorage()
     {
-        return new PhotoLocalStorage(LocalStorageConfig::getInstanceByArray($this->storage->config()));
+        switch ($this->storage->driver()) {
+            case Storage::STORAGE_LOCAL:
+                return new PhotoLocalStorage(LocalStorageConfig::getInstanceByArray($this->storage->config()));
+                break;
+            case Storage::STORAGE_S3_AMAZON:
+                return new AmazonS3PhotoStorage(AmazonS3Config::getInstanceByArray($this->storage->config()));
+                break;
+            default:
+                throw new \InvalidArgumentException(sprintf('Invalid storage driver "%s"', $this->storage->driver()));
+                break;
+        }
     }
 
     /**
