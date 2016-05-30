@@ -27,6 +27,7 @@ class AmazonS3PhotoStorage implements PhotoStorage
      */
     public function __construct(AmazonS3Config $config)
     {
+        $this->config = $config;
         $this->s3 = new S3Client([
             'version' => 'latest',
             'region'  => 'us-west-2',
@@ -35,7 +36,6 @@ class AmazonS3PhotoStorage implements PhotoStorage
                 'secret' => $this->config->getSecret()
             ]
         ]);
-        $this->config = $config;
     }
 
 
