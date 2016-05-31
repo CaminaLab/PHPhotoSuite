@@ -46,10 +46,11 @@ class AmazonS3PhotoStorage implements PhotoStorage
     public function upload(Photo $photo)
     {
         $this->s3->putObject([
-            'Bucket' => $this->config->bucket(),
-            'Key'    => $this->getPhotoUri($photo->id(), $photo->slug(), $photo->photoFile()->format()),
-            'Body'   => fopen($photo->photoFile()->filePath(), 'r'),
-            'ACL'    => 'public-read',
+            'Bucket'        => $this->config->bucket(),
+            'Key'           => $this->getPhotoUri($photo->id(), $photo->slug(), $photo->photoFile()->format()),
+            'Body'          => fopen($photo->photoFile()->filePath(), 'r'),
+            'ContentType'   => $photo->photoFile()->mimeType(),
+            'ACL'           => 'public-read',
         ]);
     }
 

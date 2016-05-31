@@ -82,9 +82,18 @@ class File
      */
     public function format()
     {
+        $mimeType = $this->mimeType();
+        return isset($this->mimeTypes[$mimeType]) ? $this->mimeTypes[$mimeType]: null;
+    }
+
+    /**
+     * @return string
+     */
+    public function mimeType()
+    {
         $resource = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($resource, $this->filePath);
         finfo_close($resource);
-        return isset($this->mimeTypes[$mimeType]) ? $this->mimeTypes[$mimeType]: null;
+        return $mimeType;
     }
 }

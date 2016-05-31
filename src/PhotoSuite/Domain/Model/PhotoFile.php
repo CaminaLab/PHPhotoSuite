@@ -35,4 +35,12 @@ class PhotoFile
     {
         return $this->file->filePath();
     }
+
+    /**
+     * @return string
+     */
+    public function mimeType()
+    {
+        return $this->file->mimeType();
+    }
 }
