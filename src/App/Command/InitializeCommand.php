@@ -58,7 +58,7 @@ class InitializeCommand extends Command
                 'MYSQL OPTION database user'
             )
             ->addOption(
-                'password',
+                'port',
                 null,
                 InputOption::VALUE_REQUIRED,
                 'MYSQL OPTION database port'
