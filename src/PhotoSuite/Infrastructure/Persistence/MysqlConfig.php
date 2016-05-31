@@ -33,7 +33,7 @@ class MysqlConfig
 
     public static function getInstanceByArray($config)
     {
-        if (!isset($config['port'])){
+        if (isset($config['port'])){
             return new self($config['host'], $config['dbname'], $config['user'], $config['password'], $config['port']);
         } else {
             return new self($config['host'], $config['dbname'], $config['user'], $config['password']);
