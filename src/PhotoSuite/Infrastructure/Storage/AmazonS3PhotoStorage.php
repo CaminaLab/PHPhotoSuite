@@ -65,7 +65,7 @@ class AmazonS3PhotoStorage implements PhotoStorage
             'Bucket' => $this->config->bucket(),
             'Key'    => trim(array_pop($itemsUri))
         ]);
-        return isset($response['DeleteMarker']) && $response['DeleteMarker'];
+        return !is_null($response->get('RequestCharged'));
     }
 
     /**
@@ -79,7 +79,7 @@ class AmazonS3PhotoStorage implements PhotoStorage
             'Bucket' => $this->config->bucket(),
             'Key'    => trim(array_pop($itemsUri))
         ]);
-        return isset($response['DeleteMarker']) && $response['DeleteMarker'];
+        return !is_null($response->get('RequestCharged'));
     }
 
     /**

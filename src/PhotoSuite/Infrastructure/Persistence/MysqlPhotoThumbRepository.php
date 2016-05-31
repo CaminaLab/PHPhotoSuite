@@ -134,6 +134,7 @@ SQL;
     {
         $sentence = $this->pdo->prepare("SELECT * FROM `photo_thumb` WHERE `photo_id`=:photo_id");
         $sentence->bindValue(':photo_id', $photoId->id());
+        $sentence->execute();
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
         $thumbCollection = new PhotoThumbCollection();
         if ($rows) {
