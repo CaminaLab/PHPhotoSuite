@@ -84,11 +84,15 @@ class ImaginePhotoThumbGenerator implements PhotoThumbGenerator
         return new PhotoFormat(self::CONVERSION_FORMAT);
     }
 
+    /**
+     * @param $photoHttpUrl
+     * @return PhotoFile
+     */
     private function downloadPhoto($photoHttpUrl)
     {
         $tmpLocation = $this->thumbGeneratorConfig->tempPath() . '/' . RandomIdGenerator::getBase62(10);
         $ch = curl_init($photoHttpUrl);
-        $fp = fopen($this->thumbGeneratorConfig->tempPath() . '/' . RandomIdGenerator::getBase62(10), 'wb');
+        $fp = fopen($tmpLocation, 'wb');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);

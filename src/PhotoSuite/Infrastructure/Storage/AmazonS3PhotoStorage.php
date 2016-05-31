@@ -107,16 +107,17 @@ class AmazonS3PhotoStorage implements PhotoStorage
     public function uploadThumb(PhotoThumb $thumb, Photo $photo)
     {
         $this->s3->putObject([
-            'Bucket' => $this->config->bucket(),
-            'Key'    => $this->getThumbUri(
+            'Bucket'        => $this->config->bucket(),
+            'Key'           => $this->getThumbUri(
                 $photo->id(),
                 $photo->slug(),
                 $thumb->width(),
                 $thumb->height(),
                 $thumb->photoThumbFile()->format()
             ),
-            'Body'   => fopen($thumb->photoThumbFile()->filePath(), 'r'),
-            'ACL'    => 'public-read',
+            'Body'          => fopen($thumb->photoThumbFile()->filePath(), 'r'),
+            'ContentType'   => $thumb->photoThumbFile()->mimeType(),
+            'ACL'           => 'public-read',
         ]);
     }
 
