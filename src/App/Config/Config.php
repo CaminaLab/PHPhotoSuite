@@ -8,6 +8,8 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbGenerator;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbPresenter;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbRepository;
+use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\MysqlConfig;
+use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\MysqlPhotoRepository;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqliteConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoRepository;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePhotoThumbRepository;
@@ -55,7 +57,17 @@ class Config
      */
     public function getPhotoRepository()
     {
-        return new SqlitePhotoRepository(SqliteConfig::getInstanceByArray($this->repository->config()));
+        switch ($this->repository->driver()) {
+            case Repository::REPOSITORY_SQLITE:
+                return new SqlitePhotoRepository(SqliteConfig::getInstanceByArray($this->repository->config()));
+                break;
+            case Storage::STORAGE_S3_AMAZON:
+                return new MysqlPhotoRepository(MysqlConfig::getInstanceByArray($this->repository->config()));
+                break;
+            default:
+                throw new \InvalidArgumentException(sprintf('Invalid repo driver "%s"', $this->repository->driver()));
+                break;
+        }
     }
 
     /**
