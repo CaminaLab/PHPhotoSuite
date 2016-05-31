@@ -60,9 +60,10 @@ class AmazonS3PhotoStorage implements PhotoStorage
      */
     public function remove(Photo $photo)
     {
+        $itemsUri = explode('/', $photo->getPhotoHttpUrl());
         $response = $this->s3->deleteObject([
             'Bucket' => $this->config->bucket(),
-            'Key'    => array_pop(explode('/', $photo->getPhotoHttpUrl())),
+            'Key'    => trim(array_pop($itemsUri))
         ]);
         return isset($response['DeleteMarker']) && $response['DeleteMarker'];
     }
@@ -73,9 +74,10 @@ class AmazonS3PhotoStorage implements PhotoStorage
      */
     public function removeThumb(PhotoThumb $thumb)
     {
+        $itemsUri = explode('/', $thumb->photoThumbHttpUrl());
         $response = $this->s3->deleteObject([
             'Bucket' => $this->config->bucket(),
-            'Key'    => array_pop(explode('/', $thumb->photoThumbHttpUrl())),
+            'Key'    => trim(array_pop($itemsUri))
         ]);
         return isset($response['DeleteMarker']) && $response['DeleteMarker'];
     }
