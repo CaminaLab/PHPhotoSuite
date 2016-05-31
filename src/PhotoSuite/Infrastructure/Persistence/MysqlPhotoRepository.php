@@ -132,7 +132,7 @@ SQL;
     public function save(Photo $photo)
     {
         $sentence = $this->pdo->prepare(
-            "INSERT INTO `Photo`(`id`, `resourceId`, `name`, `httpUrl`, `filePath`) " .
+            "INSERT INTO `photo`(`id`, `resourceId`, `name`, `httpUrl`, `filePath`) " .
             "VALUES(:id, :resourceId, :name, :httpUrl, :filePath)"
         );
         $sentence->bindValue(':id', $photo->id());
