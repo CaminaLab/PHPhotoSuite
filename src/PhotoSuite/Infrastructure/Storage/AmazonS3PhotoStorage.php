@@ -62,7 +62,7 @@ class AmazonS3PhotoStorage implements PhotoStorage
     {
         $response = $this->s3->deleteObject([
             'Bucket' => $this->config->bucket(),
-            'Key'    => $this->getPhotoUri($photo->id(), $photo->slug(), $photo->photoFile()->format()),
+            'Key'    => array_pop(explode('/', $photo->getPhotoHttpUrl())),
         ]);
         return isset($response['DeleteMarker']) && $response['DeleteMarker'];
     }
