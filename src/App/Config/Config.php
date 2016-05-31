@@ -61,7 +61,7 @@ class Config
             case Repository::REPOSITORY_SQLITE:
                 return new SqlitePhotoRepository(SqliteConfig::getInstanceByArray($this->repository->config()));
                 break;
-            case Storage::STORAGE_S3_AMAZON:
+            case Repository::REPOSITORY_MYSQL:
                 return new MysqlPhotoRepository(MysqlConfig::getInstanceByArray($this->repository->config()));
                 break;
             default:
