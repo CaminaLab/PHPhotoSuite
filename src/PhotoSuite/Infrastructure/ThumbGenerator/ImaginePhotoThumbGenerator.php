@@ -46,25 +46,9 @@ class ImaginePhotoThumbGenerator implements PhotoThumbGenerator
     {
         $photoFile = $photo->photoFile() ? $photo->photoFile() : $this->downloadPhoto($photo->getPhotoHttpUrl());
         $thumbFile = $this->thumbGeneratorConfig->tempPath() . '/' . $thumbId->id() . '.' . self::CONVERSION_FORMAT;
-        
         $target = new Box($thumbSize->width(), $thumbSize->height());
         $originalImage = $this->imagine->open($photoFile->filePath());
-        $orgSize = $originalImage->getSize();
-        
-        if ($orgSize->getWidth() > $orgSize->getHeight()) { // Landscaped
-            $width = $orgSize->getWidth() * ( $target->getHeight() / $orgSize->getHeight());
-            $height =  $target->getHeight();
-            $cropBy = new Point((max( $width - $target->getWidth(), 0 ) ) / 2, 0);
-        } else { // Portrait
-            $width = $target->getWidth();
-            $height = $orgSize->getHeight() * ( $target->getWidth() / $orgSize->getWidth());
-            $cropBy = new Point( 0, (max($height - $target->getHeight() , 0 )) / 2);
-        }
-
-        $tempBox = new Box($width, $height);
-        $img = $originalImage->thumbnail($tempBox, ImageInterface::THUMBNAIL_OUTBOUND);
-
-        $img->crop($cropBy, $target);
+        $img = $originalImage->thumbnail($target, ImageInterface::THUMBNAIL_OUTBOUND);
         $img->save($thumbFile);
 
         return new PhotoThumb(
