@@ -31,7 +31,8 @@ class Config
     private $repository;
     /** @var  Presenter */
     private $presenter;
-
+    /** @var ThumbGeneratorConfig */
+    private $thumbGeneratorConfig;
     /**
      * Config constructor.
      * @param Storage $storage
@@ -43,6 +44,7 @@ class Config
         $this->storage = $storage;
         $this->repository = $repository;
         $this->presenter = $presenter;
+        $this->thumbGeneratorConfig = new ThumbGeneratorConfig();
     }
 
     public static function getInstanceByArray($config)
@@ -89,7 +91,10 @@ class Config
                 return new PhotoLocalStorage(LocalStorageConfig::getInstanceByArray($this->storage->config()));
                 break;
             case Storage::STORAGE_S3_AMAZON:
-                return new AmazonS3PhotoStorage(AmazonS3Config::getInstanceByArray($this->storage->config()));
+                return new AmazonS3PhotoStorage(
+                    AmazonS3Config::getInstanceByArray($this->storage->config()),
+                    $this->thumbGeneratorConfig
+                );
                 break;
             default:
                 throw new \InvalidArgumentException(sprintf('Invalid storage driver "%s"', $this->storage->driver()));
@@ -121,7 +126,7 @@ class Config
      */
     public function getPhotoThumbGenerator()
     {
-        return new ImaginePhotoThumbGenerator(new ThumbGeneratorConfig());
+        return new ImaginePhotoThumbGenerator($this->thumbGeneratorConfig);
     }
 
     /**
