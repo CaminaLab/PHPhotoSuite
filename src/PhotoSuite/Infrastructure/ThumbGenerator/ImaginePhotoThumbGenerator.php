@@ -90,15 +90,17 @@ class ImaginePhotoThumbGenerator implements PhotoThumbGenerator
      */
     private function downloadPhoto($photoHttpUrl)
     {
-        $tmpLocation = $this->thumbGeneratorConfig->tempPath() . '/' . RandomIdGenerator::getBase62(10);
-        $ch = curl_init($photoHttpUrl);
-        $fp = fopen($tmpLocation, 'wb');
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
+        $tmpLocation = $this->thumbGeneratorConfig->tempPath() . '/' . md5($photoHttpUrl);
+        if (!file_exists($tmpLocation)) {
+            $ch = curl_init($photoHttpUrl);
+            $fp = fopen($tmpLocation, 'wb');
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+        }
 
         return new PhotoFile($tmpLocation);
     }

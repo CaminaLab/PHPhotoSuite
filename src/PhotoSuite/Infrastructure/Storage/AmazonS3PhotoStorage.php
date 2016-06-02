@@ -13,6 +13,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoStorage;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
+use PHPhotoSuit\PhotoSuite\Infrastructure\ThumbGenerator\ThumbGeneratorConfig;
 
 class AmazonS3PhotoStorage implements PhotoStorage
 {
@@ -20,14 +21,18 @@ class AmazonS3PhotoStorage implements PhotoStorage
     private $s3;
     /** @var AmazonS3Config */
     private $config;
+    /** @var ThumbGeneratorConfig */
+    private $thumbConfig;
 
     /**
      * AmazonS3PhotoStorage constructor.
      * @param AmazonS3Config $config
+     * @param ThumbGeneratorConfig $thumbConfig
      */
-    public function __construct(AmazonS3Config $config)
+    public function __construct(AmazonS3Config $config, ThumbGeneratorConfig $thumbConfig)
     {
         $this->config = $config;
+        $this->thumbConfig = $thumbConfig;
         $this->s3 = new S3Client([
             'version' => 'latest',
             'region'  => 'us-west-2',
@@ -52,6 +57,7 @@ class AmazonS3PhotoStorage implements PhotoStorage
             'ContentType'   => $photo->photoFile()->mimeType(),
             'ACL'           => 'public-read',
         ]);
+        rename($photo->photoFile()->filePath(), $this->thumbConfig->tempPath() . '/' . md5($photo->getPhotoHttpUrl()));
     }
 
     /**
