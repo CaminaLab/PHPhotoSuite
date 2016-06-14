@@ -14,6 +14,8 @@ class SavePhotoRequest
     private $alt;
     /** @var string */
     private $lang;
+    /** @var integer */
+    private $position;
 
     /**
      * @param string $resourceId
@@ -21,14 +23,16 @@ class SavePhotoRequest
      * @param string $file
      * @param string $alt
      * @param string $lang
+     * @param int $position
      */
-    public function __construct($resourceId, $name, $file, $alt, $lang)
+    public function __construct($resourceId, $name, $file, $alt, $lang, $position = 9999)
     {
         $this->resourceId = $resourceId;
         $this->name = $name;
         $this->file = $file;
         $this->alt = $alt;
         $this->lang = $lang;
+        $this->position = $position;
     }
 
     /**
@@ -69,5 +73,13 @@ class SavePhotoRequest
     public function lang()
     {
         return $this->lang;
+    }
+
+    /**
+     * @return int
+     */
+    public function position()
+    {
+        return $this->position;
     }
 }

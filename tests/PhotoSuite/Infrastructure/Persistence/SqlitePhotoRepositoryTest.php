@@ -10,6 +10,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqliteConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePDORegistry;
@@ -35,7 +36,8 @@ class SqlitePhotoRepositoryTest extends \PHPUnit_Framework_TestCase
             new ResourceId('test'),
             new PhotoName('test'),
             new HttpUrl('http://test'),
-            new PhotoAltCollection()
+            new PhotoAltCollection(),
+            new Position()
         );
         $this->repository->save($this->photo);
     }

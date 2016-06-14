@@ -12,6 +12,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class InMemoryPhotoRepository implements PhotoRepository
@@ -32,6 +33,7 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
                 new PhotoAltCollection(),
+                new Position(1),
                 new PhotoFile(__DIR__ . '/pixel.png')
             ),
             $photo = new Photo(
@@ -40,6 +42,7 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
                 new PhotoAltCollection(),
+                new Position(1),
                 new PhotoFile(__DIR__ . '/pixel.png')
             ),
             $photo = new Photo(
@@ -48,6 +51,7 @@ class InMemoryPhotoRepository implements PhotoRepository
                 new PhotoName('testing'),
                 new HttpUrl('http://works'),
                 new PhotoAltCollection(),
+                new Position(1),
                 new PhotoFile(__DIR__ . '/pixel.png')
             )
         ];

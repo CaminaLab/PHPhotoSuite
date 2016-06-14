@@ -7,6 +7,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\LocalStorageConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Storage\PhotoLocalStorage;
@@ -71,6 +72,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
             $photoName,
             $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
             $altCollection,
+            new Position(),
             $photoFile
         ));
         $uploadedPhoto = $this->config->storagePath() . '/' .
@@ -89,6 +91,7 @@ class PhotoLocalStorageTest extends \PHPUnit_Framework_TestCase
                     $photoName,
                     $this->storage->getPhotoHttpUrlBy($photoId, $resourceId, $photoName, $photoFile),
                     $altCollection,
+                    new Position(),
                     new PhotoFile($uploadedPhoto)
                 )
             )

@@ -11,6 +11,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumb;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbMode;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqliteConfig;
 use PHPhotoSuit\PhotoSuite\Infrastructure\Persistence\SqlitePDORegistry;
@@ -49,7 +50,8 @@ class SqlitePhotoThumbRepositoryTest extends \PHPUnit_Framework_TestCase
             new ResourceId('test'),
             new PhotoName('test'),
             $httpUrl,
-            new PhotoAltCollection()
+            new PhotoAltCollection(),
+            new Position()
         );
         $this->thumbId = new ThumbId();
         $this->thumb = new PhotoThumb(

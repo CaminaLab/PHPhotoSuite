@@ -10,6 +10,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoAltCollection;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class PhotoTest extends \PHPUnit_Framework_TestCase
@@ -29,6 +30,7 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
             new PhotoName('testing'),
             new HttpUrl('http://works'),
             new PhotoAltCollection([new PhotoAlt($photoId, 'alt', new Lang(Lang::LANGUAGE_EN))]),
+            new Position(1),
             $photoFile
         );
         $this->assertEquals($photoId->id(), $photo->id());
@@ -39,6 +41,7 @@ class PhotoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($photoAltCollection, $photo->altCollection());
         $this->assertEquals($alt, $photo->altByLang($lang));
         $this->assertNull($photo->altByLang(new Lang(Lang::LANGUAGE_ES)));
+        $this->assertSame($photo->position(), 1);
         $this->assertSame($photoFile, $photo->photoFile());
     }
 }

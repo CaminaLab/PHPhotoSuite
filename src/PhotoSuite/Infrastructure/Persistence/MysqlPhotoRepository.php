@@ -14,6 +14,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class MysqlPhotoRepository implements PhotoRepository
@@ -45,12 +46,14 @@ CREATE TABLE `photo` (
 	`resourceId` VARCHAR(100) NOT NULL,
 	`name` VARCHAR(255) NOT NULL,
 	`httpUrl` VARCHAR(255) NOT NULL,
+	`position` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '9999',
 	`filePath` VARCHAR(255) NULL DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	INDEX `photo_resource_id_idx` (`resourceId`)
+	INDEX `photo_resource_id_idx` (`resourceId`),
+	INDEX `photo_position_idx` (`position`)
 )
 COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+ENGINE=InnoDB
 SQL;
         $this->pdo->query($createPhoto);
 
@@ -111,7 +114,7 @@ SQL;
      */
     public function findCollectionBy(ResourceId $resourceId)
     {
-        $sentence  = $this->pdo->prepare("SELECT * FROM `photo` WHERE `resourceId`=:resourceId");
+        $sentence  = $this->pdo->prepare("SELECT * FROM `photo` WHERE `resourceId`=:resourceId ORDER BY `position` ASC");
         $sentence->bindValue(':resourceId', $resourceId->id(), \PDO::PARAM_STR);
         $sentence->execute();
         $rows = $sentence->fetchAll(\PDO::FETCH_ASSOC);
@@ -132,13 +135,21 @@ SQL;
     public function save(Photo $photo)
     {
         $sentence = $this->pdo->prepare(
-            "INSERT INTO `photo`(`id`, `resourceId`, `name`, `httpUrl`, `filePath`) " .
-            "VALUES(:id, :resourceId, :name, :httpUrl, :filePath)"
+            "INSERT INTO `photo`(`id`, `resourceId`, `name`, `httpUrl`, `position`, `filePath`) " .
+            "VALUES(:id, :resourceId, :name, :httpUrl, :position, :filePath)"
         );
         $sentence->bindValue(':id', $photo->id());
         $sentence->bindValue(':resourceId', $photo->resourceId());
         $sentence->bindValue(':name', $photo->name());
         $sentence->bindValue(':httpUrl', $photo->getPhotoHttpUrl());
+        $position = $photo->position();
+        if ($photo->position() === 9999) {
+            $result = $this->pdo->query(
+                "SELECT COUNT(*) as amount FROM `photo` WHERE `resourceId`='".$photo->resourceId()."'"
+            )->fetch(\PDO::FETCH_ASSOC);
+            $position = $result['amount'] + 1;
+        }
+        $sentence->bindValue(':position', $position);
         $filePath = is_null($photo->photoFile()) ? null : $photo->photoFile()->filePath();
         $filePathType = is_null($photo->photoFile()) ? \PDO::PARAM_NULL : \PDO::PARAM_STR;
         $sentence->bindValue(':filePath', $filePath, $filePathType);
@@ -191,6 +202,7 @@ SQL;
             new PhotoName($row['name']),
             new HttpUrl($row['httpUrl']),
             $this->getAltCollectionBy($photoId),
+            new Position($row['position']),
             $photoFile
         );
     }

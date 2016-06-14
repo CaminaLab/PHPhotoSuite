@@ -4,6 +4,7 @@ namespace PHPhotoSuit\PhotoSuite\Domain\Model;
 
 use PHPhotoSuit\PhotoSuite\Domain\HttpUrl;
 use PHPhotoSuit\PhotoSuite\Domain\Lang;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class Photo
@@ -18,6 +19,8 @@ class Photo
     private $photoHttpUrl;
     /** @var PhotoAltCollection */
     private $altCollection;
+    /** @var Position */
+    private $position;
     /** @var PhotoFile|null */
     private $photoFile;
 
@@ -27,6 +30,7 @@ class Photo
      * @param PhotoName $name
      * @param HttpUrl $photoHttpUrl
      * @param PhotoAltCollection $photoAltCollection
+     * @param Position $position
      * @param PhotoFile $photoFile
      */
     public function __construct(
@@ -35,6 +39,7 @@ class Photo
         PhotoName $name,
         HttpUrl $photoHttpUrl,
         PhotoAltCollection $photoAltCollection,
+        Position $position,
         PhotoFile $photoFile = null
     ) {
         $this->photoId = $photoId;
@@ -42,6 +47,7 @@ class Photo
         $this->name = $name;
         $this->photoHttpUrl = $photoHttpUrl;
         $this->altCollection = $photoAltCollection;
+        $this->position = $position;
         $this->photoFile = $photoFile;
     }
 
@@ -122,5 +128,13 @@ class Photo
     public function altCollection()
     {
         return $this->altCollection;
+    }
+
+    /**
+     * @return int
+     */
+    public function position()
+    {
+        return $this->position->value();
     }
 }

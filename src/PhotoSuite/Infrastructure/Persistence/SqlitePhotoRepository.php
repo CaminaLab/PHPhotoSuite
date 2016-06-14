@@ -14,6 +14,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoFile;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoRepository;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 
 class SqlitePhotoRepository implements PhotoRepository
@@ -43,6 +44,7 @@ CREATE TABLE IF NOT EXISTS "photo" (
     "resourceId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "httpUrl" TEXT NOT NULL,
+    "position" INT NOT NULL,
     "filePath" TEXT
 )
 SQL;
@@ -122,13 +124,14 @@ SQL;
     public function save(Photo $photo)
     {
         $sentence = $this->pdo->prepare(
-            "INSERT INTO Photo(\"uuid\", \"resourceId\", \"name\", \"httpUrl\", \"filePath\") " .
-            "VALUES(:uuid, :resourceId, :name, :httpUrl, :filePath)"
+            "INSERT INTO Photo(\"uuid\", \"resourceId\", \"name\", \"httpUrl\", \"position\",\"filePath\") " .
+            "VALUES(:uuid, :resourceId, :name, :httpUrl, :position, :filePath)"
         );
         $sentence->bindValue(':uuid', $photo->id());
         $sentence->bindValue(':resourceId', $photo->resourceId());
         $sentence->bindValue(':name', $photo->name());
         $sentence->bindValue(':httpUrl', $photo->getPhotoHttpUrl());
+        $sentence->bindValue(':position', $photo->position());
         $filePath = is_null($photo->photoFile()) ? null : $photo->photoFile()->filePath();
         $filePathType = is_null($photo->photoFile()) ? \PDO::PARAM_NULL : \PDO::PARAM_STR;
         $sentence->bindValue(':filePath', $filePath, $filePathType);
@@ -180,6 +183,7 @@ SQL;
             new PhotoName($row['name']),
             new HttpUrl($row['httpUrl']),
             $this->getAltCollectionBy($photoId),
+            new Position($row['position']),
             $photoFile
         );
     }

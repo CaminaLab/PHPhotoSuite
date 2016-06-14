@@ -11,6 +11,7 @@ use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoId;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoName;
 use PHPhotoSuit\PhotoSuite\Domain\Model\PhotoThumbSize;
 use PHPhotoSuit\PhotoSuite\Domain\Model\ThumbId;
+use PHPhotoSuit\PhotoSuite\Domain\Position;
 use PHPhotoSuit\PhotoSuite\Domain\ResourceId;
 use PHPhotoSuit\PhotoSuite\Infrastructure\ThumbGenerator\ImaginePhotoThumbGenerator;
 use PHPhotoSuit\PhotoSuite\Infrastructure\ThumbGenerator\ThumbGeneratorConfig;
@@ -61,6 +62,7 @@ class ImaginePhotoThumbGeneratorTest extends \PHPUnit_Framework_TestCase
                 new PhotoName('test'),
                 new HttpUrl('http://test'),
                 new PhotoAltCollection(),
+                new Position(),
                 new PhotoFile(__DIR__ . '/landscape640x480.png')
             )],
             [new Photo(
@@ -69,6 +71,7 @@ class ImaginePhotoThumbGeneratorTest extends \PHPUnit_Framework_TestCase
                 new PhotoName('test'),
                 new HttpUrl('http://test'),
                 new PhotoAltCollection(),
+                new Position(),
                 new PhotoFile(__DIR__ . '/portrait480x640.png')
             )]
         ];
