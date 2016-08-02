@@ -13,7 +13,7 @@
     "imagine/imagine": "^0.6.3",
     "jimmyoak/utilities": "^2.5",
     "symfony/console": "^3.0",
-    "aws/aws-sdk-php": "^3.18"
+    "aws/aws-sdk-php": "3.18.14"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.3"
